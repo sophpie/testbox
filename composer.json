@@ -1,0 +1,11 @@
+{
+  "name" : "TestBox",
+  "version" : "0.1.0",
+  "require" : {
+    "zendframework/zend-loader" : ">=2.2.0"
+  },
+  "repositories" : [ {
+    "type" : "composer",
+    "url" : "https://packagist.org/"
+  } ]
+}
