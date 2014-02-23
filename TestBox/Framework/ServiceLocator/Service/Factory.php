@@ -1,5 +1,5 @@
 <?php
-namespace TestBox\Framework\ServiceLocator\service;
+namespace TestBox\Framework\ServiceLocator\Service;
 
 class Factory extends ServiceAbstract
 {

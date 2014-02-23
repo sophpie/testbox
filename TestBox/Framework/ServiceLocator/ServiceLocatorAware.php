@@ -6,13 +6,6 @@ use TestBox\Framework\ServiceLocator\ServiceLocatorInterface;
 interface ServiceLocatorAware
 {
     /**
-     * Return service locator
-     * 
-     * @return ServiceLocatorInterface
-     */
-    public function getServiceLocator();
-    
-    /**
      * Set service locator
      * 
      * @param ServiceLocatorInterface $serviceLocator

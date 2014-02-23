@@ -2,14 +2,12 @@
 namespace TestBox\Test;
 
 use TestBox\Environment\EnvironmentInterface;
-use TestBox\Report\ReportInterface;
 use TestBox\Box\BoxInterface;
-use TestBox\Result\ResultInterface;
 use TestBox\Framework\EventManager\EventManagerInterface;
 use TestBox\Framework\EventManager\Event\EventInterface;
 use TestBox\Framework\EventManager\EventManager;
-use TestBox\Framework\EventManager\Propagation\PropagationResult;
 use TestBox\Scenario\ScenarioInterface;
+use TestBox\Assertion\AssertionManager;
 
 abstract class TestAbstract implements TestInterface
 {
@@ -50,6 +48,13 @@ abstract class TestAbstract implements TestInterface
 	protected $eventManager;
 	
 	/**
+	 * Assertion manager
+	 * 
+	 * @var AssertionManager
+	 */
+	protected $assertionManager;
+	
+	/**
 	 * Service locator
 	 * 
 	 * @var ServiceLocatorInterface
@@ -67,12 +72,16 @@ abstract class TestAbstract implements TestInterface
 	}
 	
 	/**
+	 * Set and configure scenario
+	 * 
      * @param string $scenario
      */
     public function setScenario(ScenarioInterface $scenario)
     {
         $this->scenario = $scenario;
         $this->scenario->setBox($this->box);
+        $this->scenario->setEvent($this->event);
+        $this->scenario->setAssertionManager($this->assertionManager);
     }
 
 	/**
@@ -147,5 +156,14 @@ abstract class TestAbstract implements TestInterface
     {
         $this->box->setParameter($name, $value);
     }
+    
+	/**
+     * @param \TestBox\Assertion\AssertionManager $assertionManager
+     */
+    public function setAssertionManager(AssertionManager $assertionManager)
+    {
+        $this->assertionManager = $assertionManager;
+    }
+
 
 }

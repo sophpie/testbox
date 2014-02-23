@@ -12,9 +12,15 @@ class TestEvent extends EventAbstract
     const EVENT_POST_TEST = 'testEvent::post_test';
     
     /**
-     * Result
-     * @var ResultInterface
+     * Assertion results
+     * 
+     * @var array
      */
-    protected $result;
+    protected $assertionResults = array();
+    
+    public function addAssertionresult()
+    {
+        
+    }
     
 }
