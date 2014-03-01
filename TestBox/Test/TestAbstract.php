@@ -130,9 +130,10 @@ abstract class TestAbstract implements TestInterface
 	}
 	
 	/**
-     * @param \TestBox\Environment\EnvironmentInterface $environment
-     */
-    public function setEnvironment($environment)
+	 * (non-PHPdoc)
+	 * @see \TestBox\Test\TestInterface::setEnvironment()
+	 */
+    public function setEnvironment(EnvironmentInterface $environment)
     {
         $this->environment = $environment;
     }

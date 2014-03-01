@@ -6,6 +6,7 @@ use TestBox\Framework\EventManager\EventTriggerInterface;
 use TestBox\Box\BoxInterface;
 use TestBox\Scenario\ScenarioInterface;
 use TestBox\Assertion\AssertionManager;
+use TestBox\Environment\EnvironmentInterface;
 
 interface TestInterface extends EventTriggerInterface
 {
@@ -22,6 +23,13 @@ interface TestInterface extends EventTriggerInterface
 	 * @param string $scenarioFile
 	 */
 	public function setScenario(ScenarioInterface $scenarioFile);
+	
+	/**
+	 * Set environement
+	 * 
+	 * @param EnvironmentInterface $environment
+	 */
+	public function setEnvironment(EnvironmentInterface $environment);
 	
 	/**
 	 * Set Box parameters

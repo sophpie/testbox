@@ -80,4 +80,15 @@ abstract class EventAbstract implements EventInterface
 	{
 		return $this->propagationCallback;
 	}
+	
+	/**
+	 * Check if parameter exists
+	 * 
+	 * @param string $name
+	 * @return boolean
+	 */
+	public function hasParameter($name)
+	{
+	   return isset($this->params[$name]);
+	}
 }

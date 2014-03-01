@@ -94,7 +94,8 @@ abstract class ScenarioAbstract implements ScenarioInterface
     protected function doAssertion($assertionName, $args)
     {
         $assertion = $this->assertionManager->getAssertion($assertionName);
-        return $assertion->check($args);
+        $assertionResult = $assertion->check($args);
+        $this->event->addAssertionresult($assertionResult);
     }
 
 }
