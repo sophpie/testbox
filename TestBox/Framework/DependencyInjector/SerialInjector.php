@@ -56,13 +56,16 @@ class SerialInjector implements InjectorInterface, ConfigurableInterface
         $str = '';
         foreach ($options as $propertyName => $propertyDefinition){
             $str .= $this->configureString($propertyName).';';
-            if ($propertyDefinition['type'] == 'array') 
-                $str .= $this->configureArray($propertyDefinition);
-            elseif ($propertyDefinition['type'] == 'string')
+            
+            if (is_string($propertyDefinition))
                 $str .= $this->configureString($propertyDefinition);
-            elseif ($propertyDefinition['type'] == 'integer')
-                $str .= 'i:' . $propertyDefinition['value'];
-            else $str .= $this->configureObject($propertyDefinition);
+            if (is_int($propertyDefinition))
+                $str .= $this->configureString($propertyDefinition);
+            if (is_array($propertyDefinition)){
+                if ($propertyDefinition['type'] == 'array')
+                    $str .= $this->configureArray($propertyDefinition);
+                else $str .= $this->configureObject($propertyDefinition);
+            }
             $str .= ';';
         }
         return trim($str,';');

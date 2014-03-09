@@ -1,64 +1,73 @@
 <?php
 namespace TestBox\Workbench;
 
-use TestBox\Environment\EnvironmentManager;
-use TestBox\Framework\Core\ConfigurableInterface;
-use TestBox\Environment\EnvironmentAbstract;
-use TestBox\Test\Test;
+use TestBox\Framework\ServiceLocator\ServiceLocatorAbstract;
+use TestBox\Framework\Configuration\ConfigurationManager;
+use TestBox\Framework\Configuration\Configuration;
+use TestBox\Framework\DependencyInjector\DependencyInjector;
 
-abstract class WorkbenchAbstract implements ConfigurableInterface
+abstract class WorkbenchAbstract extends ServiceLocatorAbstract
 {
     /**
-     * Environment manager
-     *
-     * @var EnvironmentManager
+     * Configuration manager
+     * 
+     * @var ConfigurationManager
      */
-    protected $environmentManager;
+    protected $configManager;
     
     /**
-     * Constructor
-     * @param array $options
+     * Dependency injector
+     * 
+     * @var DependencyInjector
      */
-    public function __construct($options = null)
+    protected $dependencyInjector;
+    
+	/**
+     * @param \TestBox\Framework\Configuration\ConfigurationManager $configManager
+     */
+    public function setConfigManager($configManager)
     {
-        $this->environmentManager = new EnvironmentManager();
-        if ($options) $this->configure($options);
+        $this->configManager = $configManager;
     }
     
     /**
-     * (non-PHPdoc)
-     * @see \TestBox\Framework\Core\ConfigurableInterface::configure()
+     * Boostrap workbench
+     *
+     * @param Configuration $initialConfig
      */
-    public function configure($options)
+    public function boostrap(Configuration $initialConfig)
     {
-        $this->environmentManager->configure($options['environmentManager']);
+        $this->doConfiguration($initialConfig);
+        $this->init();
+    }
+    
+    /**
+     * Merge configurations
+     * 
+     * And set it into a service
+     * @param Configuration $initialConfig
+     */
+    abstract protected function doConfiguration(Configuration $initialConfig);
+    
+    /**
+     * Initiate workbench internal elements
+     */
+    abstract protected function init();
+    
+	/**
+     * @return the $DependencyInjector
+     */
+    public function getDependencyInjector()
+    {
+        return $this->DependencyInjector;
     }
 
-    /**
-     * Return an environment
-     *
-     * @param string $envName
-     * @return EnvironmentAbstract
+	/**
+     * @param \TestBox\Framework\DependencyInjector\DependencyInjector $DependencyInjector
      */
-    public function getEnvironment($envName = null)
+    public function setDependencyInjector($dependencyInjector)
     {
-        return $this->environmentManager->getEnvironment($envName);
+        $this->dependencyInjector = $dependencyInjector;
     }
-    
-    /**
-     * @param EnvironmentManager $environmentManager
-     */
-    public function setEnvironmentManager(EnvironmentManager $environmentManager)
-    {
-        $this->environmentManager = $environmentManager;
-    }
-    
-    /**
-     * 
-     * @param Test $test
-     */
-    public function runTest(Test $test)
-    {
-        
-    }
+
 }

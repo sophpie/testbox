@@ -5,10 +5,9 @@ use TestBox\Framework\ServiceLocator\ServiceLocatorAware;
 use TestBox\Framework\EventManager\EventTriggerInterface;
 use TestBox\Box\BoxInterface;
 use TestBox\Scenario\ScenarioInterface;
-use TestBox\Assertion\AssertionManager;
 use TestBox\Environment\EnvironmentInterface;
 
-interface TestInterface extends EventTriggerInterface
+interface TestInterface extends EventTriggerInterface,ServiceLocatorAware
 {
     /**
      * Set box
@@ -45,12 +44,4 @@ interface TestInterface extends EventTriggerInterface
 	 * @param mixed $value
 	 */
 	public function setParameter($name, $value);
-	
-	/**
-	 * Set assertion manager
-	 * 
-	 * @param AssertionManager $assertionManager
-	 */
-	public function setAssertionManager(AssertionManager $assertionManager);
-	
 }

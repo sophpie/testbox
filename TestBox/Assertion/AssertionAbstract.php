@@ -51,8 +51,10 @@ abstract class AssertionAbstract implements AssertionInterface
         $this->assertionResult->setIsValid($this->validate($args));
         $this->assertionResult->setTrace();
         $this->assertionResult->setArgs($args);
-        if ( ! $this->assertionResult->getIsValid() && $unvalidatedMessage) $this->assertionResult->setMessage($unvalidatedMessage);
-        elseif ($validatedMessage) $this->assertionResult->setMessage($validatedMessage);
+        if ( ! $this->assertionResult->getIsValid() && $unvalidatedMessage)
+            $this->assertionResult->setMessage($unvalidatedMessage);
+        elseif ($validatedMessage)
+            $this->assertionResult->setMessage($validatedMessage);
         return $this->assertionResult;
     }
     

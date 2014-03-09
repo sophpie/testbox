@@ -8,6 +8,7 @@ use TestBox\Framework\EventManager\Event\EventInterface;
 use TestBox\Framework\EventManager\EventManager;
 use TestBox\Scenario\ScenarioInterface;
 use TestBox\Assertion\AssertionManager;
+use TestBox\Framework\ServiceLocator\ServiceLocatorInterface;
 
 abstract class TestAbstract implements TestInterface
 {
@@ -55,21 +56,11 @@ abstract class TestAbstract implements TestInterface
 	protected $assertionManager;
 	
 	/**
-	 * Service locator
+	 * Service locator (workbench)
 	 * 
 	 * @var ServiceLocatorInterface
 	 */
-	protected $serviceLocator;
-	
-	/**
-	 * Constructor
-	 */
-	public function __construct()
-	{
-	    $this->eventManager = new EventManager();
-	    $this->event = new TestEvent(TestEvent::EVENT_TEST);
-	    $this->eventManager->attach($this->event, array($this,'executeScenario'));
-	}
+	protected $workbench;
 	
 	/**
 	 * Set and configure scenario
@@ -158,13 +149,23 @@ abstract class TestAbstract implements TestInterface
         $this->box->setParameter($name, $value);
     }
     
+    /**
+     * (non-PHPdoc)
+     * @see \TestBox\Framework\ServiceLocator\ServiceLocatorAware::setServiceLocator()
+     */
+    public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
+    {
+        $this->workbench = $serviceLocator;
+    }
+    
 	/**
      * @param \TestBox\Assertion\AssertionManager $assertionManager
      */
-    public function setAssertionManager(AssertionManager $assertionManager)
+    public function setAssertionManager($assertionManager)
     {
         $this->assertionManager = $assertionManager;
     }
+
 
 
 }

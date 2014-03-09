@@ -1,11 +1,10 @@
 <?php
 namespace TestBox\Environment;
 
-use TestBox\Framework\Core\ConfigurableInterface;
 use TestBox\Framework\ServiceLocator\ServiceLocatorAbstract;
 use TestBox\Environment\Environment;
 
-class EnvironmentManager extends ServiceLocatorAbstract implements ConfigurableInterface
+class EnvironmentManager extends ServiceLocatorAbstract
 {
     /**
      * Default environment
@@ -33,7 +32,7 @@ class EnvironmentManager extends ServiceLocatorAbstract implements ConfigurableI
                 if ($environment['isDefault'] && empty($this->defaultEnvironmentName))
                     $this->defaultEnvironmentName = $envName;
             }
-            $this->environmentsList[$envName] = new Environment($environment['elements']);
+            $this->environmentsList[$envName] = new Environment($environment['services']);
         }
     }
     
