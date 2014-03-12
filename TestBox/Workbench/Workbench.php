@@ -65,13 +65,13 @@ class Workbench extends WorkbenchAbstract
      *
      * @param TestInterface $test
      */
-    public function testFactory(Configuration $options)
+    public function testFactory(Array $options)
     {
         $this->dependencyInjector->configure($options);
         $test = $this->dependencyInjector->getInstance();
         $test->setServiceLocator($this);
         $config = $this->get('config');
-        $assertionManager = new AssertionManager(new Configuration($config['assertion_manager']));
+        $assertionManager = new AssertionManager($config['assertion_manager']);
         $test->setAssertionManager($assertionManager);
         return $test;
     }

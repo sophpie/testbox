@@ -2,6 +2,7 @@
 namespace TestBox\Framework\ServiceLocator\Service;
 
 use TestBox\Framework\ServiceLocator\Service\ServiceAbstract;
+use TestBox\Framework\Configuration\ConfigurationAbstract;
 
 class Instance extends ServiceAbstract
 {
@@ -36,7 +37,7 @@ class Instance extends ServiceAbstract
      * (non-PHPdoc)
      * @see \TestBox\Framework\ServiceLocator\service\ServiceAbstract::configure()
      */
-    public function configure($options)
+    public function configure(Array $options)
     {
         parent::configure($options);
         if (isset($options['instance'])) $this->setInstance($options['instance']);

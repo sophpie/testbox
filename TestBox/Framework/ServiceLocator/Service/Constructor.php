@@ -1,6 +1,7 @@
 <?php
 namespace TestBox\Framework\ServiceLocator\Service;
 
+use TestBox\Framework\Configuration\ConfigurationAbstract;
 class Constructor extends ServiceAbstract
 {
     /**
@@ -30,7 +31,7 @@ class Constructor extends ServiceAbstract
      * (non-PHPdoc)
      * @see \TestBox\Framework\ServiceLocator\service\ServiceAbstract::configure()
      */
-    public function configure($options)
+    public function configure(Array $options)
     {
         parent::configure($options);
         if (isset($options['class'])) $this->className = $options['class'];

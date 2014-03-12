@@ -7,6 +7,7 @@ namespace TestBox\Framework\ServiceLocator;
 
 use TestBox\Framework\ServiceLocator\service\ServiceInterface;
 use TestBox\Framework\Core\ConfigurableInterface;
+use TestBox\Framework\Configuration\ConfigurationAbstract;
 
 abstract class ServiceLocatorAbstract implements ServiceLocatorInterface, ConfigurableInterface
 {
@@ -117,7 +118,7 @@ abstract class ServiceLocatorAbstract implements ServiceLocatorInterface, Config
      * 
      * @param array $array
      */
-    public function configure($array)
+    public function configure(Array $array)
     {
         foreach ($array as $key => $definition){
             $this->defineService($key, $definition);

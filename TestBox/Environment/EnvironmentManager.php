@@ -3,6 +3,7 @@ namespace TestBox\Environment;
 
 use TestBox\Framework\ServiceLocator\ServiceLocatorAbstract;
 use TestBox\Environment\Environment;
+use TestBox\Framework\Configuration\ConfigurationAbstract;
 
 class EnvironmentManager extends ServiceLocatorAbstract
 {
@@ -24,7 +25,7 @@ class EnvironmentManager extends ServiceLocatorAbstract
      * (non-PHPdoc)
      * @see \TestBox\Framework\Core\ConfigurableInterface::configure()
      */
-    public function configure($options)
+    public function configure(Array $options)
     {
         foreach ($options as $envName => $environment)
         {

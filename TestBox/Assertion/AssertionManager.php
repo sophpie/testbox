@@ -21,7 +21,7 @@ class AssertionManager extends ServiceLocatorAbstract
      * 
      * @param Configuration $options
      */
-    public function __construct(Configuration $options = null)
+    public function __construct(Array $options = null)
     {
         if ($options) $this->configure($options);
     }

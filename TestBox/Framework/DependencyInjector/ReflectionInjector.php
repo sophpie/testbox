@@ -2,6 +2,7 @@
 namespace TestBox\Framework\DependencyInjector;
 
 use TestBox\Framework\Core\ConfigurableInterface;
+use TestBox\Framework\Configuration\ConfigurationAbstract;
 
 class ReflectionInjector implements InjectorInterface, ConfigurableInterface
 {
@@ -55,7 +56,7 @@ class ReflectionInjector implements InjectorInterface, ConfigurableInterface
      * (non-PHPdoc)
      * @see \TestBox\Framework\Core\ConfigurableInterface::configure()
      */
-    public function configure($options)
+    public function configure(Array $options)
     {
         $className = $options['class'];
         $constParams = array();
