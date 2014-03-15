@@ -19,13 +19,6 @@ abstract class EventAbstract implements EventInterface
 	protected $params = array();
 	
 	/**
-	 * Propagation callback
-	 * 
-	 * @var callbable
-	 */
-	protected $propagationCallback;
-	
-	/**
 	 * (non-PHPdoc)
 	 * @see \TestBox\Framework\EventManager\Event\EventInterface::getIdentifier()
 	 */
@@ -58,27 +51,9 @@ abstract class EventAbstract implements EventInterface
 	 * 
 	 * @param string $identifier
 	 */
-	public function __construct($identifier, $propagationCallback = null)
+	public function __construct($identifier)
 	{
 		$this->identifier = $identifier;
-		if ($propagationCallback) $this->setPropagationCallback($propagationCallback);
-	}
-	/**
-	 * (non-PHPdoc)
-	 * @see \TestBox\Framework\EventManager\Event\EventInterface::setPropagationCallback()
-	 */
-	public function setPropagationCallback(callable $callback)
-	{
-		$this->propagationCallback = $callback;
-	}
-	
-	/**
-	 * (non-PHPdoc)
-	 * @see \TestBox\Framework\EventManager\Event\EventInterface::getPropagationCallback()
-	 */
-	public function getPropagationCallback()
-	{
-		return $this->propagationCallback;
 	}
 	
 	/**

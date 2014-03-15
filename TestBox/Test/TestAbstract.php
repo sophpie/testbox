@@ -3,15 +3,14 @@ namespace TestBox\Test;
 
 use TestBox\Environment\EnvironmentInterface;
 use TestBox\Box\BoxInterface;
-use TestBox\Framework\EventManager\EventManagerInterface;
-use TestBox\Framework\EventManager\Event\EventInterface;
-use TestBox\Framework\EventManager\EventManager;
 use TestBox\Scenario\ScenarioInterface;
 use TestBox\Assertion\AssertionManager;
 use TestBox\Framework\ServiceLocator\ServiceLocatorInterface;
 
 abstract class TestAbstract implements TestInterface
 {
+    use \TestBox\Framework\EventManager\Trigger\EventTriggerTrait;
+    
 	/**
 	 * Environment
 	 * 
@@ -32,21 +31,6 @@ abstract class TestAbstract implements TestInterface
 	 * @var ScenarioInterface
 	 */
 	protected $scenario;
-	
-	/**
-	 * Test event
-	 * 
-	 * This event collects what is return by test
-	 * @var TestEvent
-	 */
-	protected $event;
-	
-	/**
-	 * Event Manager
-	 * 
-	 * @var EventManagerInterface
-	 */
-	protected $eventManager;
 	
 	/**
 	 * Assertion manager
@@ -70,9 +54,6 @@ abstract class TestAbstract implements TestInterface
     public function setScenario(ScenarioInterface $scenario)
     {
         $this->scenario = $scenario;
-        $this->scenario->setBox($this->box);
-        $this->scenario->setEvent($this->event);
-        $this->scenario->setAssertionManager($this->assertionManager);
     }
 
 	/**
@@ -82,16 +63,7 @@ abstract class TestAbstract implements TestInterface
     {
         $this->box = $box;
     }
-
-	/**
-	 * (non-PHPdoc)
-	 * @see \TestBox\Framework\EventManager\EventTriggerInterface::setEventManager()
-	 */
-	public function setEventManager(EventManagerInterface $eventManager)
-	{
-	    $this->eventManager = $eventManager;
-	}
-	
+    
 	/**
 	 * Trigger events to drive test
 	 */
@@ -103,20 +75,13 @@ abstract class TestAbstract implements TestInterface
 	}
 	
 	/**
-	 * (non-PHPdoc)
-	 * @see \TestBox\Framework\EventManager\EventTriggerInterface::trigger()
-	 */
-	public function trigger(EventInterface $event)
-	{
-	    return $this->eventManager->doPropagation($event);
-	}
-	
-	/**
 	 * Execute given scenario
 	 */
 	public function executeScenario()
 	{
 	    $this->scenario->setBox($this->box);
+	    $this->scenario->setEvent($this->event);
+	    $this->scenario->setAssertionManager($this->assertionManager);
 	    $this->scenario->run();
 	}
 	
@@ -165,7 +130,4 @@ abstract class TestAbstract implements TestInterface
     {
         $this->assertionManager = $assertionManager;
     }
-
-
-
 }

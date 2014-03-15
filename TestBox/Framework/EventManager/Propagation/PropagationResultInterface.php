@@ -10,8 +10,9 @@ interface PropagationResultInterface
 	 * 
 	 * @param EventInterface $event
 	 * @param mixed $listener
+	 * @param callable $callback
 	 */
-	public function addListenerResult(EventInterface $event,$listener);
+	public function addListenerResult(EventInterface $event,$listener,callable $callback);
 	
 	/**
 	 * Check if the propagtion is stopped.

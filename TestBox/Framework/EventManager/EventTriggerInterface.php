@@ -10,9 +10,10 @@ interface EventTriggerInterface
 	/**
 	 * Trigger an event
 	 * 
+	 * Depends on arguments
 	 * @return PropagationResultInterface
 	 */
-	public function trigger(EventInterface $event);
+	public function trigger();
 	
 	/**
 	 * Set an event Manager

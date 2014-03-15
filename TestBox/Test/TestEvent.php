@@ -13,7 +13,7 @@ class TestEvent extends EventAbstract
     const EVENT_POST_TEST = 'testEvent::post_test';
     
     /**
-     * Add an assertion result to the stacl
+     * Add an assertion result to the stack
      * 
      * @param AssertionResult $assertionResult
      */

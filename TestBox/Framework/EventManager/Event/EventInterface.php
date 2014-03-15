@@ -25,21 +25,4 @@ interface EventInterface
 	 * @return mixed
 	 */
 	public function getParam($key);
-	
-	/**
-	 * Return the callback funtion to be used within propagation process
-	 * 
-	 * This callback wil call with listener result as parameter. 
-	 * If callbcak return true event propagation will be stopped.
-	 * 
-	 * @return callable
-	 */
-	public function getPropagationCallback();
-	
-	/**
-	 * Set the porpagation callback
-	 * 
-	 * @param callable $callback
-	 */
-	public function setPropagationCallback(callable $callback);
 }

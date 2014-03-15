@@ -7,35 +7,11 @@ use TestBox\Assertion\AssertionResult;
 abstract class AssertionAbstract implements AssertionInterface
 {
     /**
-     * Test event
-     * 
-     * Event that will be populate by assertion
-     * @var TestEvent
-     */
-    protected $event;
-    
-    /**
      * Assertion result
      * 
      * @var AssertionResult
      */
     protected $assertionResult;
-    
-	/**
-     * @return the $event
-     */
-    public function getEvent()
-    {
-        return $this->event;
-    }
-
-	/**
-     * @param \TestBox\Test\TestEvent $event
-     */
-    public function setEvent($event)
-    {
-        $this->event = $event;
-    }
     
     /**
      * Ckeck assertion
@@ -57,8 +33,6 @@ abstract class AssertionAbstract implements AssertionInterface
             $this->assertionResult->setMessage($validatedMessage);
         return $this->assertionResult;
     }
-    
-    
     
     /**
      * (non-PHPdoc)

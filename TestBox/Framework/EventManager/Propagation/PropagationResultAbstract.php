@@ -23,15 +23,13 @@ abstract class PropagationResultAbstract implements PropagationResultInterface
 	 * (non-PHPdoc)
 	 * @see \TestBox\Framework\EventManager\Propagation\PropagationResultInterface::addListenerResult()
 	 */
-	public function addListenerResult(EventInterface $event,$listener)
+	public function addListenerResult(EventInterface $event,$listener, callable $callback = null)
 	{
-		if (is_callable($listener)) $value =  call_user_func($listener,$event);
-		else {
-			//@todo : what to do ?
-			return ;
-		}
+		$value =  call_user_func($listener,$event);
 		$this->resultStack[] = $value;
-		if (call_user_func($event->getPropagationCallback(),$value)) $this->isPropagationStopped =true;
+		if ($callback) {
+		  if (call_user_func($callback,$value)) $this->isPropagationStopped =true;
+		}
 	}
 	
 	/**

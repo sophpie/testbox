@@ -3,11 +3,9 @@ namespace TestBox\Framework\EventManager;
 
 use TestBox\Framework\EventManager\Event\EventInterface;
 use TestBox\Framework\EventManager\Propagation\PropagationResultInterface;
-use TestBox\Framework\EventManager\Propagation\PropagationResult;
 
 abstract class EventManagerAbstract implements EventManagerInterface
 {
-	
 	/**
 	 * Listeners queue
 	 * 
@@ -21,16 +19,6 @@ abstract class EventManagerAbstract implements EventManagerInterface
 	 * @var PropagationResultInterface
 	 */
 	protected $propagationResultPrototype;
-	
-	/**
-	 * Contructor
-	 * 
-	 * @param PropagationResultInterface $propagationResultPrototype
-	 */
-	public function __construct()
-	{
-		$this->propagationResultPrototype = new PropagationResult();
-	}
 	
 	/**
 	 * (non-PHPdoc)
@@ -50,7 +38,6 @@ abstract class EventManagerAbstract implements EventManagerInterface
 	 */
 	public function detach($eventIdentifier, $listener = null)
 	{
-		
 		if ( ! $listener) return $this->detachAll($eventIdentifier);
 		foreach ($this->queue[$eventIdentifier] as $priority => $listenersList){
 			foreach ($listenersList as $callBack) {
@@ -73,14 +60,14 @@ abstract class EventManagerAbstract implements EventManagerInterface
 	 * (non-PHPdoc)
 	 * @see \TestBox\Framework\EventManager\EventManagerInterface::doPropagation()
 	 */
-	public function doPropagation(EventInterface $event)
+	public function doPropagation(EventInterface $event, callable $callback = null)
 	{
 		$result = clone $this->propagationResultPrototype;
 		$eventIdentifier = $event->getIdentifier();
 		if ( ! array_key_exists($eventIdentifier, $this->queue)) return $result;
 		foreach ($this->queue[$eventIdentifier] as $listenersList){
 			foreach ($listenersList as $listener){
-				$result->addListenerResult($event,$listener);
+				$result->addListenerResult($event,$listener,$callback);
 				if ($result->isPropagationStopped()) break;
 			}
 		}
@@ -93,5 +80,4 @@ abstract class EventManagerAbstract implements EventManagerInterface
     {
         $this->propagationResultPrototype = $propagationResultPrototype;
     }
-
 }
