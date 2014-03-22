@@ -52,7 +52,10 @@ abstract class WorkbenchAbstract extends ServiceLocatorAbstract
     /**
      * Initiate workbench internal elements
      */
-    abstract protected function init();
+    protected function init()
+    {
+        
+    }
     
 	/**
      * @return the $DependencyInjector

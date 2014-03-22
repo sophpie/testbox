@@ -90,5 +90,14 @@ class ClassBox extends BoxAbstract
         $result = $method->invokeArgs($this->sample, $args);
         return $result;
     }
+    
+	/**
+     * @return the $sample
+     */
+    public function getSample()
+    {
+        return $this->sample;
+    }
+
 
 }

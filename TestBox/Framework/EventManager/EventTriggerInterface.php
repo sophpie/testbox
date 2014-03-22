@@ -16,6 +16,13 @@ interface EventTriggerInterface
 	public function trigger();
 	
 	/**
+	 * Retrigger last event with a differents identifier
+	 * 
+	 * @param string $newIdentifier
+	 */
+	public function retrigger($newIdentifier);
+	
+	/**
 	 * Set an event Manager
 	 * @param EventManagerInterface $eventManager
 	 */

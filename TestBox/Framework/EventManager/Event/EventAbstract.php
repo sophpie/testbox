@@ -47,23 +47,34 @@ abstract class EventAbstract implements EventInterface
 	}
 	
 	/**
-	 * Constructor
-	 * 
-	 * @param string $identifier
-	 */
-	public function __construct($identifier)
-	{
-		$this->identifier = $identifier;
-	}
-	
-	/**
 	 * Check if parameter exists
 	 * 
 	 * @param string $name
 	 * @return boolean
 	 */
-	public function hasParameter($name)
+	public function hasParam($name)
 	{
 	   return isset($this->params[$name]);
 	}
+	
+	/**
+	 * Clone event
+	 */
+	public function __clone()
+	{
+	    $this->identifier = null;
+	}
+	
+	/**
+	 * Set identifier
+	 * 
+	 * Only used in case of cloning event
+	 * @param unknown $identifier
+	 */
+	public function setIdentifier($identifier)
+	{
+	    if ( ! $this->identifier) $this->identifier = $identifier;
+	    else throw new \Exception('Trying to change uncloned event identifier');
+	}
+	
 }

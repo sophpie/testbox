@@ -2,7 +2,7 @@
 namespace TestBox\Framework\ServiceLocator\Service;
 
 use TestBox\Framework\Core\ConfigurableInterface;
-use TestBox\Framework\Configuration\ConfigurationAbstract;
+use TestBox\Framework\ServiceLocator\ServiceLocatorInterface;
 
 abstract class ServiceAbstract implements ServiceInterface, ConfigurableInterface
 {
@@ -41,5 +41,5 @@ abstract class ServiceAbstract implements ServiceInterface, ConfigurableInterfac
      * (non-PHPdoc)
      * @see \TestBox\Framework\ServiceLocator\service\ServeInterface::getInstance()
      */
-    abstract public function getInstance();
+    abstract public function getInstance(ServiceLocatorInterface $serviceLocator);
 }

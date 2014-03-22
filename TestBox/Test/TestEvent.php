@@ -1,16 +1,28 @@
 <?php
 namespace TestBox\Test;
 
-use TestBox\Framework\EventManager\Event\EventAbstract;
+use TestBox\Framework\EventManager\Event\Event;
 use TestBox\Assertion\AssertionResult;
 
-class TestEvent extends EventAbstract
+class TestEvent extends Event
 {
-    const EVENT_PRE_TEST = 'testEvent::pre_test';
-    const EVENT_SET_ENV = 'testEvent::set_environment';
     const EVENT_TEST = 'testEvent::test';
-    const EVENT_RESET_ENV = 'testEvent::reset_environment';
-    const EVENT_POST_TEST = 'testEvent::post_test';
+    const EVENT_VALIDATION = 'testEvent::validation';
+    const EVENT_REPORT = 'testEvent::report';
+    
+    /**
+     * Assertion results stack
+     * 
+     * @var array
+     */
+    protected $assertionResults = array();
+    
+    /**
+     * Test 
+     * 
+     * @var TestInterface
+     */
+    protected $test;
     
     /**
      * Add an assertion result to the stack
@@ -19,11 +31,32 @@ class TestEvent extends EventAbstract
      */
     public function addAssertionresult(AssertionResult $assertionResult)
     {
-        if ( ! $this->hasParameter('assertionResults'))
-            $this->setParam('assertionResults', array());
-        $assertionResults = $this->getParam('assertionResult');
-        $assertionResults[] = $assertionResult;
-        $this->setParam('assertionResults', $assertionResults);
+        array_push($this->assertionResults,$assertionResult);
     }
     
+	/**
+     * @return the $test
+     */
+    public function getTest()
+    {
+        return $this->test;
+    }
+
+	/**
+     * @param \TestBox\Test\TestInterface $test
+     */
+    public function setTest($test)
+    {
+        $this->test = $test;
+    }
+    
+	/**
+     * @return the $assertionResults
+     */
+    public function getAssertionResults()
+    {
+        return $this->assertionResults;
+    }
+
+
 }

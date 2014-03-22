@@ -3,6 +3,7 @@ namespace TestBox\Framework\ServiceLocator\Service;
 
 use TestBox\Framework\ServiceLocator\Service\ServiceAbstract;
 use TestBox\Framework\Configuration\ConfigurationAbstract;
+use TestBox\Framework\ServiceLocator\ServiceLocatorInterface;
 
 class Instance extends ServiceAbstract
 {
@@ -16,7 +17,7 @@ class Instance extends ServiceAbstract
      * (non-PHPdoc)
      * @see \TestBox\Framework\ServiceLocator\service\ServiceAbstract::getInstance()
      */
-    public function getInstance()
+    public function getInstance(ServiceLocatorInterface $serviceLocator)
     {
         return $this->sharedInstance;
     }

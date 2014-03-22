@@ -1,12 +1,16 @@
 <?php
+/**
+ * Main container for TestBox testing
+ * 
+ * @author sophpie
+ *
+ */
 namespace TestBox\Workbench;
 
 use TestBox\Framework\Configuration\ConfigurationManager;
-use TestBox\Environment\EnvironmentManager;
 use TestBox\Framework\Configuration\Configuration;
 use TestBox\Framework\ServiceLocator\Service\Instance;
 use TestBox\Framework\DependencyInjector\ReflectionInjector;
-use TestBox\Assertion\AssertionManager;
 
 class Workbench extends WorkbenchAbstract
 {
@@ -34,7 +38,6 @@ class Workbench extends WorkbenchAbstract
         $this->setTestBoxDirectory(realpath(__DIR__ .'/../../'));
         $this->setConfigManager(new ConfigurationManager());
         $this->setDependencyInjector(new ReflectionInjector());
-        $this->environmentManager = new EnvironmentManager();
     }
     
     /**
@@ -46,18 +49,7 @@ class Workbench extends WorkbenchAbstract
         $this->configManager->addFilePhp($this->testBoxDirectory . '/TestBox/Config/global.config.php');
         $this->configManager->add($initialConfig);
         $this->addService('config', new Instance($this->configManager->getConfig()));
-    }
-    
-    /**
-     * (non-PHPdoc)
-     * @see \TestBox\Workbench\WorkbenchAbstract::init()
-     */
-    protected function init()
-    {
-        $environmentConfig = $this->get('config')['environmentManager'];
-        $environmentManager = new EnvironmentManager();
-        $environmentManager->configure($environmentConfig);
-        $this->addService('environments', new Instance($environmentManager));
+        $this->configure($this->get('config')['workbench']);
     }
     
     /**
@@ -70,9 +62,6 @@ class Workbench extends WorkbenchAbstract
         $this->dependencyInjector->configure($options);
         $test = $this->dependencyInjector->getInstance();
         $test->setServiceLocator($this);
-        $config = $this->get('config');
-        $assertionManager = new AssertionManager($config['assertion_manager']);
-        $test->setAssertionManager($assertionManager);
         return $test;
     }
     
@@ -85,6 +74,16 @@ class Workbench extends WorkbenchAbstract
     public function getEnvironment($envName = null)
     {
         return $this->get('environments')->getEnvironment($envName);
+    }
+    
+    /**
+     * Return test report
+     * 
+     * @return ReportInterface
+     */
+    public function getReport()
+    {
+        return $this->get('report');
     }
     
     /**

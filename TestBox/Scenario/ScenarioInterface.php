@@ -2,8 +2,9 @@
 namespace TestBox\Scenario;
 
 use TestBox\Box\BoxInterface;
+use TestBox\Framework\ServiceLocator\ServiceLocatorAware;
 
-interface ScenarioInterface
+interface ScenarioInterface extends ServiceLocatorAware
 {
     /**
      * Set box
@@ -18,4 +19,6 @@ interface ScenarioInterface
      * @retun mixed
      */
     public function run();
+    
+    
 }

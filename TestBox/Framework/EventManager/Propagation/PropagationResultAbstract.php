@@ -40,4 +40,12 @@ abstract class PropagationResultAbstract implements PropagationResultInterface
 	{
 		return $this->isPropagationStopped;
 	}
+	
+	/**
+	 * Get event
+	 */
+	public function getEvent()
+	{
+	    return $this->event;
+	}
 }

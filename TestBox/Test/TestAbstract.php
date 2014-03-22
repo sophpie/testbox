@@ -4,8 +4,8 @@ namespace TestBox\Test;
 use TestBox\Environment\EnvironmentInterface;
 use TestBox\Box\BoxInterface;
 use TestBox\Scenario\ScenarioInterface;
-use TestBox\Assertion\AssertionManager;
 use TestBox\Framework\ServiceLocator\ServiceLocatorInterface;
+use TestBox\Result\Result;
 
 abstract class TestAbstract implements TestInterface
 {
@@ -33,18 +33,18 @@ abstract class TestAbstract implements TestInterface
 	protected $scenario;
 	
 	/**
-	 * Assertion manager
-	 * 
-	 * @var AssertionManager
-	 */
-	protected $assertionManager;
-	
-	/**
 	 * Service locator (workbench)
 	 * 
 	 * @var ServiceLocatorInterface
 	 */
 	protected $workbench;
+	
+	/**
+	 * Is test valid ?
+	 * 
+	 * @var boolean
+	 */
+	protected $isValid = false;
 	
 	/**
 	 * Set and configure scenario
@@ -64,27 +64,21 @@ abstract class TestAbstract implements TestInterface
         $this->box = $box;
     }
     
-	/**
-	 * Trigger events to drive test
-	 */
-	public function run()
-	{
-	    $this->trigger(new TestEvent(TestEvent::EVENT_PRE_TEST));
-	    $this->trigger(new TestEvent(TestEvent::EVENT_TEST));
-	    $this->trigger(new TestEvent(TestEvent::EVENT_POST_TEST));
-	}
-	
-	/**
-	 * Execute given scenario
-	 */
-	public function executeScenario()
-	{
-	    $this->scenario->setBox($this->box);
-	    $this->scenario->setEvent($this->event);
-	    $this->scenario->setAssertionManager($this->assertionManager);
-	    $this->scenario->run();
-	}
-	
+    /**
+     * (non-PHPdoc)
+     * @see \TestBox\Test\TestAbstract::run()
+     */
+    public function run()
+    {
+        $this->scenario->setServiceLocator($this->workbench);
+        $this->result = new Result();
+        $testEvent = new TestEvent(TestEvent::EVENT_TEST);
+        $testEvent->setTest($this);
+        $this->trigger($testEvent);
+        $this->retrigger(TestEvent::EVENT_VALIDATION);
+        $this->retrigger(TestEvent::EVENT_REPORT);
+    }
+    
 	/**
 	 * (non-PHPdoc)
 	 * @see \TestBox\Test\TestInterface::setEnvironment()
@@ -118,16 +112,42 @@ abstract class TestAbstract implements TestInterface
      * (non-PHPdoc)
      * @see \TestBox\Framework\ServiceLocator\ServiceLocatorAware::setServiceLocator()
      */
-    public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
+    public function setServiceLocator(ServiceLocatorInterface $workbench)
     {
-        $this->workbench = $serviceLocator;
+        $this->workbench = $workbench;
     }
     
 	/**
-     * @param \TestBox\Assertion\AssertionManager $assertionManager
+     * @return the $environment
      */
-    public function setAssertionManager($assertionManager)
+    public function getEnvironment()
     {
-        $this->assertionManager = $assertionManager;
+        return $this->environment;
     }
+
+	/**
+     * @return the $box
+     */
+    public function getBox()
+    {
+        return $this->box;
+    }
+
+	/**
+     * @return the $scenario
+     */
+    public function getScenario()
+    {
+        return $this->scenario;
+    }
+    
+	/**
+     * @return the $isValid
+     */
+    public function getIsValid()
+    {
+        return $this->isValid;
+    }
+
+
 }

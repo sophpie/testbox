@@ -25,13 +25,6 @@ class AssertionResult
     protected $isValid = false;
     
     /**
-     * Backtracte
-     * 
-     * @var string
-     */
-    protected $trace = '';
-    
-    /**
      * Assertion arguments
      * @var array
      */
@@ -60,14 +53,6 @@ class AssertionResult
     {
         return $this->isValid;
     }
-
-	/**
-     * @return the $trace
-     */
-    public function getTrace()
-    {
-        return $this->trace;
-    }
     
 	/**
      * @param string $assertionType
@@ -91,17 +76,6 @@ class AssertionResult
     public function setIsValid($isValid)
     {
         $this->isValid = $isValid;
-    }
-
-	/**
-     * Set code trace
-     */
-    public function setTrace()
-    {
-        $backtrace = debug_backtrace();
-        $trace = $backtrace[3];
-        $traceMessage = $trace['file'] . ' - on line ' . $trace['line'] ;
-        $this->trace = $traceMessage;
     }
 	/**
      * @return the $args

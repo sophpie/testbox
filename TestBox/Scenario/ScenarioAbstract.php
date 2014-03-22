@@ -3,7 +3,8 @@ namespace TestBox\Scenario;
 
 use TestBox\Box\BoxInterface;
 use TestBox\Test\TestEvent;
-use TestBox\Assertion\AssertionManager;
+use TestBox\Workbench\WorkbenchAbstract;
+use TestBox\Framework\ServiceLocator\ServiceLocatorInterface;
 
 abstract class ScenarioAbstract implements ScenarioInterface
 {
@@ -22,11 +23,11 @@ abstract class ScenarioAbstract implements ScenarioInterface
     protected $event;
     
     /**
-     * Assertion manager
+     * Workbench
      * 
-     * @var AssertionManager
+     * @var WorkbenchAbstract
      */
-    protected $assertionManager;
+    protected $workbench;
     
     /**
      * (non-PHPdoc)
@@ -35,6 +36,15 @@ abstract class ScenarioAbstract implements ScenarioInterface
     public function setBox(BoxInterface $box)
     {
         $this->box = $box;
+    }
+    
+    /**
+     * (non-PHPdoc)
+     * @see \TestBox\Framework\ServiceLocator\ServiceLocatorAware::setServiceLocator()
+     */
+    public function setServiceLocator(ServiceLocatorInterface $workbench)
+    {
+        $this->workbench = $workbench;
     }
     
     /**
@@ -67,14 +77,6 @@ abstract class ScenarioAbstract implements ScenarioInterface
     {
         $this->event = $event;
     }
-    
-	/**
-     * @param \TestBox\Assertion\AssertionManager $assertionManager
-     */
-    public function setAssertionManager($assertionManager)
-    {
-        $this->assertionManager = $assertionManager;
-    }
 
     /**
      * Method alias manager 
@@ -93,9 +95,17 @@ abstract class ScenarioAbstract implements ScenarioInterface
      */
     protected function doAssertion($assertionName, $args)
     {
-        $assertion = $this->assertionManager->getAssertion($assertionName);
+        $assertion = $this->getAssertionManager()->getAssertion($assertionName);
         $assertionResult = $assertion->check($args);
         $this->event->addAssertionresult($assertionResult);
+    }
+    
+    /**
+     * get assertion manager
+     */
+    protected function getAssertionManager()
+    {
+        return $this->workbench->get('assertionManager');
     }
 
 }

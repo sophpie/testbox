@@ -1,13 +1,43 @@
 <?php
 return array(
-	'assertion_manager' => array(
-        'assertTrue' => array(
-	       'serviceClass' => 'Constructor',
-	       'options' => array('class' => '\TestBox\Assertion\Boolean\AssertTrue'),
-	    ),
-        'assertFalse' => array(
+    'workbench' => array(
+        'environments' => array(
+            'serviceClass' => 'Factory',
+            'options' => array(
+                'factory' => 'TestBox\Environment\EnvironmentManagerFactory',
+            ),
+        ),
+        'assertionManager' => array(
+            'serviceClass' => 'Factory',
+            'options' => array(
+                'factory' => 'TestBox\Assertion\AssertionManagerFactory',
+            )
+        ),
+        'report' => array(
             'serviceClass' => 'Constructor',
-            'options' => array('class' => '\TestBox\Assertion\Boolean\AssertFalse'),
+            'options' => array(
+                'class' => 'TestBox\Report\Format\ConsoleReport',
+            )
         ),
     ),
+    'assertion_manager' => array(
+        'assertTrue' => array(
+            'serviceClass' => 'Constructor',
+            'options' => array(
+                'class' => '\TestBox\Assertion\Boolean\AssertTrue'
+            )
+        ),
+        'assertFalse' => array(
+            'serviceClass' => 'Constructor',
+            'options' => array(
+                'class' => '\TestBox\Assertion\Boolean\AssertFalse'
+            )
+        ),
+        'assertEquals' => array(
+            'serviceClass' => 'Constructor',
+            'options' => array(
+                'class' => '\TestBox\Assertion\Comparison\AssertEquals'
+            )
+        ),
+    )
 );

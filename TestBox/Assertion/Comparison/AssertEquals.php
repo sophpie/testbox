@@ -1,9 +1,9 @@
 <?php
-namespace TestBox\Assertion\Boolean;
+namespace TestBox\Assertion\Comparison;
 
 use TestBox\Assertion\AssertionAbstract;
 
-class AssertTrue extends AssertionAbstract
+class AssertEquals extends AssertionAbstract
 {
     /**
      * (non-PHPdoc)
@@ -11,19 +11,21 @@ class AssertTrue extends AssertionAbstract
      */
     protected function getArgsNumber()
     {
-        return 1;
+        return 2;
     }
     
     /**
-     * Check if parameter is true
-     * 
-     * Argument has to be a boolean
+     * Check if given values are equal
+     *
      * @param mixed $test
      * @return boolean
      */
     public function validate($args)
     {
-        if (gettype($args[0]) != 'boolean') return false;
-        return $args[0];
+        $a = $args[0];
+        $b = $args[1];
+        if (gettype($a) != gettype($b)) return false;
+        if ($a !== $b) return false;
+        return true;
     }
 }

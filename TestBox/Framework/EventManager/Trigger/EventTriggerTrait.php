@@ -72,4 +72,14 @@ trait EventTriggerTrait
             return $this->triggerDefaultEvent($args[0],$args[1],$args[2]);
         }
     }
+    
+    /**
+     * Re-trigger last event with different identifier
+     * 
+     * @param unknown $newIdentifier
+     */
+    public function retrigger($newIdentifier)
+    {
+        $this->triggerEvent($this->eventManager->getPingPongEvent($newIdentifier));
+    }
 }

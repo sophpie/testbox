@@ -38,6 +38,7 @@ abstract class ServiceLocatorAbstract implements ServiceLocatorInterface, Config
      */
     public function addService($key, ServiceInterface $service)
     {
+        $key = $this->normalizeKey($key);
         $this->serviceStack[$key] = $service;
     }
     
@@ -47,6 +48,7 @@ abstract class ServiceLocatorAbstract implements ServiceLocatorInterface, Config
      */
     public function defineService($key, $options)
     {
+        $key = $this->normalizeKey($key);
         $this->serviceDefinitions[$key] = $options;
     }
     
@@ -56,14 +58,15 @@ abstract class ServiceLocatorAbstract implements ServiceLocatorInterface, Config
      */
     public function get($key)
     {
+        $key = $this->normalizeKey($key);
         if (isset($this->alias[$key])) $key = $this->alias[$key];
         if ( ! isset($this->serviceStack[$key])){
             $options = $this->serviceDefinitions[$key];
-            $service = $this->ServiceFactory($options);
+            $service = $this->serviceFactory($options);
             $this->addService($key, $service);
         }
         else $service = $this->serviceStack[$key];
-        return $service->getInstance();
+        return $service->getInstance($this);
     }
     
     /**
@@ -72,6 +75,7 @@ abstract class ServiceLocatorAbstract implements ServiceLocatorInterface, Config
      */
     public function hasService($serviceName)
     {
+        $serviceName = $this->normalizeKey($serviceName);
         if (array_key_exists($serviceName, $this->serviceDefinitions)) return true;
         if (array_key_exists($serviceName, $this->serviceStack)) return true;
         return false;
@@ -83,6 +87,7 @@ abstract class ServiceLocatorAbstract implements ServiceLocatorInterface, Config
      */
     public function isInstantiated($serviceName)
     {
+        $serviceName = $this->normalizeKey($serviceName);
         if ( ! $this->hasService($serviceName)) return false;
         if (array_key_exists($serviceName, $this->serviceStack)) return true;
         return false;
@@ -94,6 +99,8 @@ abstract class ServiceLocatorAbstract implements ServiceLocatorInterface, Config
      */
     public function addAlias($aliasKey, $targetKey)
     {
+        $aliasKey = $this->normalizeKey($aliasKey);
+        $targetKey = $this->normalizeKey($targetKey);
         $this->alias[$aliasKey] = $targetKey;
     }
     
@@ -103,9 +110,9 @@ abstract class ServiceLocatorAbstract implements ServiceLocatorInterface, Config
      * @param array $options
      * @return ServiceInterface
      */
-    protected function ServiceFactory($options)
+    protected function serviceFactory($options)
     {
-        $serviceClass = $options['serviceClass'];
+        $serviceClass = ucfirst($options['serviceClass']);
         if (class_exists(__NAMESPACE__ . '\Service\\' . $serviceClass, true))
             $serviceClass = __NAMESPACE__ . '\Service\\' . $serviceClass;
         $service = new $serviceClass();
@@ -123,5 +130,18 @@ abstract class ServiceLocatorAbstract implements ServiceLocatorInterface, Config
         foreach ($array as $key => $definition){
             $this->defineService($key, $definition);
         }
+    }
+    
+    /**
+     * Normalize service locator keys
+     * 
+     * @param string $key
+     * @return string
+     */
+    protected function normalizeKey($key)
+    {
+        $key = strtolower($key);
+        $key = preg_replace('@[^a-z0-9]@', '', $key);
+        return $key;
     }
 }

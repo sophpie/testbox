@@ -1,7 +1,8 @@
 <?php
 namespace TestBox\Framework\ServiceLocator\Service;
 
-use TestBox\Framework\Configuration\ConfigurationAbstract;
+use TestBox\Framework\ServiceLocator\ServiceLocatorInterface;
+
 class Factory extends ServiceAbstract
 {
     /**
@@ -24,7 +25,7 @@ class Factory extends ServiceAbstract
      * (non-PHPdoc)
      * @see \TestBox\Framework\ServiceLocator\service\ServiceAbstract::getInstance()
      */
-    public function getInstance()
+    public function getInstance(ServiceLocatorInterface $serviceLocator)
     {
         if ( ! $this->factoryInstance){
             $factoryName = $this->factoryName;
@@ -32,11 +33,11 @@ class Factory extends ServiceAbstract
         }
         if ($this->isShared) {
             if ( ! $this->sharedInstance) {
-                $this->sharedInstance = $this->factoryInstance->createInstance();
+                $this->sharedInstance = $this->factoryInstance->createInstance($serviceLocator);
             }
             return $this->sharedInstance;
         }
-        return $this->factoryInstance->createInstance();
+        return $this->factoryInstance->createInstance($serviceLocator);
     }
     
     /**
