@@ -71,7 +71,6 @@ abstract class TestAbstract implements TestInterface
     public function run()
     {
         $this->scenario->setServiceLocator($this->workbench);
-        $this->result = new Result();
         $testEvent = new TestEvent(TestEvent::EVENT_TEST);
         $testEvent->setTest($this);
         $this->trigger($testEvent);

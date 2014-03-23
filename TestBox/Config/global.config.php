@@ -16,7 +16,7 @@ return array(
         'report' => array(
             'serviceClass' => 'Constructor',
             'options' => array(
-                'class' => 'TestBox\Report\Format\ConsoleReport',
+                'class' => 'TestBox\Report\Console\ConsoleReport',
             )
         ),
     ),

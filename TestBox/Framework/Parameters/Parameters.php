@@ -56,4 +56,13 @@ class Parameters implements ParametersInterface
             $this->setParam($name, $value);
         }
     }
+    
+    /**
+     * (non-PHPdoc)
+     * @see \TestBox\Framework\Parameters\ParametersInterface::hasParam()
+     */
+    public function hasParam($name)
+    {
+        return array_key_exists($name, $this->stack);
+    }
 }

@@ -36,4 +36,12 @@ interface ParametersInterface
      */
     public function setParams($array);
     
+    /**
+     * Check if param exists
+     * 
+     * @param string $name
+     * @return boolean
+     */
+    public function hasParam($name);
+    
 }

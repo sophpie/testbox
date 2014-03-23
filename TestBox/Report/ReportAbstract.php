@@ -13,12 +13,21 @@ abstract class ReportAbstract implements ReportInterface
     protected $eventStack = array();
     
     /**
+     * Report item prototype
+     * 
+     * @var ReportItemInterface
+     */
+    protected $reportItemPrototype;
+    
+    /**
      * (non-PHPdoc)
      * @see \TestBox\Report\ReportInterface::addEvent()
      */
     public function addEvent(TestEvent $testEvent)
     {
-        array_push($this->eventStack, $testEvent);
+        $item = clone $this->reportItemPrototype;
+        $item->extractData($testEvent);
+        array_push($this->eventStack, $item);
     }
     
     /**
@@ -26,5 +35,14 @@ abstract class ReportAbstract implements ReportInterface
      * @see \TestBox\Report\ReportInterface::render()
      */
     abstract public function render();
+    
+	/**
+     * @param \TestBox\Report\ReportItemInterface $reportItemPrototype
+     */
+    public function setReportItemPrototype($reportItemPrototype)
+    {
+        $this->reportItemPrototype = $reportItemPrototype;
+    }
+
     
 }
