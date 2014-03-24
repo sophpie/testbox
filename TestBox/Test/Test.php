@@ -12,7 +12,6 @@ class Test extends TestAbstract
     public function __construct()
     {
         $this->eventManager = new EventManager();
-        $this->event = new TestEvent(TestEvent::EVENT_TEST);
         $this->eventManager->attach(TestEvent::EVENT_TEST, array($this,'executeScenario'));
         $this->eventManager->attach(TestEvent::EVENT_VALIDATION, array($this,'doValidation'));
         $this->eventManager->attach(TestEvent::EVENT_REPORT, array($this,'doReport'));

@@ -107,5 +107,18 @@ abstract class ScenarioAbstract implements ScenarioInterface
     {
         return $this->workbench->get('assertionManager');
     }
+    
+    /**
+     * Get param from data injector
+     * 
+     * @param string $dataInjector
+     * @param string $key
+     */
+    public function param($dataInjector, $key)
+    {
+        $dataInjector = $this->workbench->getDataInjector($dataInjector);
+        $param = $dataInjector->getParam($key);
+        return $param;
+    }
 
 }

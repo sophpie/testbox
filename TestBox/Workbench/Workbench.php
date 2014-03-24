@@ -11,6 +11,7 @@ use TestBox\Framework\Configuration\ConfigurationManager;
 use TestBox\Framework\Configuration\Configuration;
 use TestBox\Framework\ServiceLocator\Service\Instance;
 use TestBox\Framework\DependencyInjector\ReflectionInjector;
+use TestBox\DataInjector\DataInjectorManager;
 
 class Workbench extends WorkbenchAbstract
 {
@@ -84,6 +85,16 @@ class Workbench extends WorkbenchAbstract
     public function getReport()
     {
         return $this->get('report');
+    }
+    
+    /**
+     * Get a data injecor
+     * 
+     * @param string $dataInjectorKey
+     */
+    public function getDataInjector($dataInjectorKey)
+    {
+        return $this->get('dataInjectorManager')->get($dataInjectorKey);
     }
     
     /**

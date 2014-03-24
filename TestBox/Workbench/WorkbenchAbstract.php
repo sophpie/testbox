@@ -5,6 +5,7 @@ use TestBox\Framework\ServiceLocator\ServiceLocatorAbstract;
 use TestBox\Framework\Configuration\ConfigurationManager;
 use TestBox\Framework\Configuration\Configuration;
 use TestBox\Framework\DependencyInjector\DependencyInjector;
+use TestBox\DataInjector\DataInjectorManager;
 
 abstract class WorkbenchAbstract extends ServiceLocatorAbstract
 {
@@ -72,5 +73,4 @@ abstract class WorkbenchAbstract extends ServiceLocatorAbstract
     {
         $this->dependencyInjector = $dependencyInjector;
     }
-
 }

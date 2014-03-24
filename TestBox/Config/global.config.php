@@ -19,6 +19,12 @@ return array(
                 'class' => 'TestBox\Report\Console\ConsoleReport',
             )
         ),
+        'dataInjectorManager' => array(
+            'serviceClass' => 'Factory',
+            'options' => array(
+                'factory' => 'TestBox\DataInjector\DataInjectorManagerFactory',
+            )
+        ),
     ),
     'assertion_manager' => array(
         'assertTrue' => array(
@@ -39,5 +45,15 @@ return array(
                 'class' => '\TestBox\Assertion\Comparison\AssertEquals'
             )
         ),
-    )
+    ),
+    
+    'data_injectors' => array(
+	   'datacsv' => array(
+            'serviceClass' => 'ConfigurableConstructor',
+	        'options' => array(
+	   	       'class' => 'TestBox\DataInjector\CsvDataInjector',
+	           'parameter' => '',
+	        ),    	
+        ),
+    ),
 );
