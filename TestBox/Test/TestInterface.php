@@ -29,19 +29,4 @@ interface TestInterface extends EventTriggerInterface,ServiceLocatorAware
 	 * @param EnvironmentInterface $environment
 	 */
 	public function setEnvironment(EnvironmentInterface $environment);
-	
-	/**
-	 * Set Box parameters
-	 * 
-	 * @param array $array
-	 */
-	public function setParameters($array = array());
-	
-	/**
-	 * Set a box parameter value
-	 * 
-	 * @param string $name
-	 * @param mixed $value
-	 */
-	public function setParameter($name, $value);
 }

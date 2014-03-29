@@ -19,22 +19,6 @@ interface BoxInterface
 	public function setStatus($array);
 	
 	/**
-	 * Set parameters
-	 * 
-	 * @param array $array
-	 */
-	public function setParameters($array);
-	
-	/**
-	 * Set box parameter
-	 * 
-	 * You can use namespace : ns::key = value
-	 * @param string $name
-	 * @param mixed $value
-	 */
-	public function setParameter($name,$value);
-	
-	/**
 	 * Execute a command with the given argument
 	 * 
 	 * @param string $command

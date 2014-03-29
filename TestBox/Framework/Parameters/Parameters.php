@@ -65,4 +65,15 @@ class Parameters implements ParametersInterface
     {
         return array_key_exists($name, $this->stack);
     }
+    
+    /**
+     * Shortcut to get param
+     * 
+     * @param string $name
+     * @return multitype:
+     */
+    public function __get($name)
+    {
+        return $this->getParam($name);
+    }
 }

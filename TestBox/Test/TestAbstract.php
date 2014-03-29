@@ -89,26 +89,6 @@ abstract class TestAbstract implements TestInterface
     
     /**
      * (non-PHPdoc)
-     * @see \TestBox\Test\TestInterface::setParameters()
-     */
-    public function setParameters($array = array())
-    {
-        foreach ($array as $name => $value){
-            $this->setParameter($name, $value);
-        }
-    }
-    
-    /**
-     * (non-PHPdoc)
-     * @see \TestBox\Test\TestInterface::setParameter()
-     */
-    public function setParameter($name, $value)
-    {
-        $this->box->setParameter($name, $value);
-    }
-    
-    /**
-     * (non-PHPdoc)
      * @see \TestBox\Framework\ServiceLocator\ServiceLocatorAware::setServiceLocator()
      */
     public function setServiceLocator(ServiceLocatorInterface $workbench)
@@ -147,6 +127,4 @@ abstract class TestAbstract implements TestInterface
     {
         return $this->isValid;
     }
-
-
 }

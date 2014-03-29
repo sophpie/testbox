@@ -4,7 +4,7 @@ namespace TestBox\DataInjector;
 
 use TestBox\Framework\Parameters\Parameters;
 
-class CsvDataInjector extends ArrayDataInjector
+class CsvDataInjector extends DataInjectorAbstract
 {
     /**
      * Delimiter character
@@ -52,7 +52,7 @@ class CsvDataInjector extends ArrayDataInjector
      * (non-PHPdoc)
      * @see \TestBox\DataInjector\DataInjectorInterface::getParam()
      */
-    public function getParam()
+    public function getParameters()
     {
         if ( ! $this->isInitiated) $this->init();
         $data = $this->current();
@@ -62,8 +62,16 @@ class CsvDataInjector extends ArrayDataInjector
             $name = $this->paramNames[$i];
             $param->setParam($name, $data[$i]);
         }
-        $this->next();
         return $param;
+    }
+    
+    /**
+     * (non-PHPdoc)
+     * @see \TestBox\DataInjector\DataInjectorInterface::getParam()
+     */
+    public function getParam($name)
+    {
+        return $this->getParameters()->getParam($name);
     }
     
     /**

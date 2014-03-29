@@ -83,9 +83,8 @@ class ClassBox extends BoxAbstract
      * (non-PHPdoc)
      * @see \TestBox\Box\BoxAbstract::execute()
      */
-    public function execute($command, $argNames = array())
+    public function execute($command, $args = array())
     {
-        $args = $this->getArgumentsValues($argNames);
         $method = $this->reflection->getMethod($command);
         $result = $method->invokeArgs($this->sample, $args);
         return $result;

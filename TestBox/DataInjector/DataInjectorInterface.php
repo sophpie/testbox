@@ -10,5 +10,19 @@ interface DataInjectorInterface extends \Iterator
      * 
      * @return Parameters
      */
-    public function getParam();
+    public function getParameters();
+    
+    /**
+     * Get parameter value
+     * 
+     * @param string $name
+     */
+    public function getParam($name);
+    
+    /**
+     * Magical shortcut for getParam
+     * 
+     * @param string $name
+     */
+    public function __get($name);
 }

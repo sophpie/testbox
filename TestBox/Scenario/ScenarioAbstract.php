@@ -91,6 +91,18 @@ abstract class ScenarioAbstract implements ScenarioInterface
     }
     
     /**
+     * Shortcut to get injected parameter value
+     * 
+     * @param srting $name
+     */
+    public function __get($name)
+    {
+        $dataInjector = $this->workbench->getDataInjector($name);
+        if ( ! $dataInjector) return;
+        return $dataInjector;
+    }
+    
+    /**
      * Manage assertion
      */
     protected function doAssertion($assertionName, $args)
@@ -111,13 +123,13 @@ abstract class ScenarioAbstract implements ScenarioInterface
     /**
      * Get param from data injector
      * 
-     * @param string $dataInjector
+     * @param string $dataInjector key
      * @param string $key
      */
     public function param($dataInjector, $key)
     {
         $dataInjector = $this->workbench->getDataInjector($dataInjector);
-        $param = $dataInjector->getParam($key);
+        $param = $dataInjector->getParameters()->getParam($key);
         return $param;
     }
 
