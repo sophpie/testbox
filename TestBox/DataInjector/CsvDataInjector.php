@@ -3,8 +3,37 @@ namespace TestBox\DataInjector;
 
 
 use TestBox\Framework\Parameters\Parameters;
+
 class CsvDataInjector extends ArrayDataInjector
 {
+    /**
+     * Delimiter character
+     * 
+     * @var string
+     */
+    protected $delimiter = ',';
+    
+    /**
+     * Enclosure character
+     * 
+     * @var string
+     */
+    protected $enclosure = '"';
+    
+    /**
+     * Escape character
+     * 
+     * @var string
+     */
+    protected $escape = '\\';
+    
+    /**
+     * CSV file path
+     * 
+     * @var string
+     */
+    protected $csvFile ='';
+    
     /**
      * List of parameters names
      * 
@@ -13,24 +42,11 @@ class CsvDataInjector extends ArrayDataInjector
     protected $paramNames = array();
     
     /**
-     * Constructor 
-     * @param unknown $csvFile
-     * @param number $length
-     * @param string $separator
-     * @param string $delimiter
-     * @param string $enclosure
+     * Check weither stack is initiated or not
+     * 
+     * @var boolean
      */
-    public function __construct($csvFile,$length=0,$delimiter=',',$enclosure='"',$escape='\\')
-    {
-        parent::__construct(array());
-        $fileRes = fopen($csvFile, 'r');
-        if ( ! $fileRes) return null;
-        $this->paramNames = fgetcsv($fileRes,$length,$delimiter,$enclosure,$escape);
-        while (($data = fgetcsv($fileRes,$length,$delimiter,$enclosure,$escape)) !== FALSE) {
-            $this->append($data);
-        }
-        fclose($fileRes);
-    }
+    protected $isInitiated = false;
     
     /**
      * (non-PHPdoc)
@@ -38,9 +54,10 @@ class CsvDataInjector extends ArrayDataInjector
      */
     public function getParam()
     {
+        if ( ! $this->isInitiated) $this->init();
         $data = $this->current();
         $param = new Parameters();
-        for ($i = 0; count($data); $i++)
+        for ($i = 0; $i < count($data); $i++)
         {
             $name = $this->paramNames[$i];
             $param->setParam($name, $data[$i]);
@@ -48,4 +65,54 @@ class CsvDataInjector extends ArrayDataInjector
         $this->next();
         return $param;
     }
+    
+    /**
+     * Initiate csv data
+     * 
+     * @return NULL
+     */
+    public function init()
+    {
+        $fileRes = fopen($this->csvFile, 'r');
+        if ( ! $fileRes) return null;
+        $this->paramNames = fgetcsv($fileRes,0,$this->delimiter,$this->enclosure,$this->escape);
+        while (($data = fgetcsv($fileRes,0,$this->delimiter,$this->enclosure,$this->escape)) !== FALSE) {
+            $this->append($data);
+        }
+        fclose($fileRes);
+        $this->isInitiated = true;
+    }
+    
+	/**
+     * @param string $delimiter
+     */
+    public function setDelimiter($delimiter)
+    {
+        $this->delimiter = $delimiter;
+    }
+
+	/**
+     * @param string $enclosure
+     */
+    public function setEnclosure($enclosure)
+    {
+        $this->enclosure = $enclosure;
+    }
+
+	/**
+     * @param string $escape
+     */
+    public function setEscape($escape)
+    {
+        $this->escape = $escape;
+    }
+
+	/**
+     * @param string $csvFile
+     */
+    public function setCsvFile($csvFile)
+    {
+        $this->csvFile = $csvFile;
+    }
+
 }

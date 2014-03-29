@@ -3,15 +3,8 @@ namespace TestBox\Framework\DependencyInjector;
 
 use TestBox\Framework\Core\ConfigurableInterface;
 
-class ReflectionInjector implements InjectorInterface, ConfigurableInterface
+class StandardInjector implements InjectorInterface, ConfigurableInterface
 {
-    /**
-     * Rfelcted class of instance
-     * 
-     * @var \ReflectionClass
-     */
-    protected $reflectedClass;
-    
     /**
      * Instance
      * 
@@ -46,9 +39,9 @@ class ReflectionInjector implements InjectorInterface, ConfigurableInterface
      */
     public function setProperty($property,$value)
     {
-        $reflectedProperty = $this->reflectedClass->getProperty($property);
-        $reflectedProperty->setAccessible(true);
-        $reflectedProperty->setValue($this->instance, $value);
+        $setterMethod = 'set' . ucfirst($property);
+        if ( ! method_exists($this->instance, $setterMethod)) return;
+        $this->instance->$setterMethod($value);
     }
     
     /**
@@ -58,11 +51,7 @@ class ReflectionInjector implements InjectorInterface, ConfigurableInterface
     public function configure(Array $options)
     {
         $className = $options['class'];
-        $constParams = array();
-        if (isset($options['constructorParameters']))
-            $constParams = $options['constructorParameters'];
-        $this->reflectedClass = new \ReflectionClass($className);
-        $this->instance = $this->reflectedClass->newInstanceArgs($constParams);
+        $this->instance = new $className();
         if ( ! isset($options['properties'])) return ;
         foreach ($options['properties'] as $name => $value){
             if ( ! is_array($value) || ! isset($value['class']))

@@ -46,14 +46,4 @@ return array(
             )
         ),
     ),
-    
-    'data_injectors' => array(
-	   'datacsv' => array(
-            'serviceClass' => 'ConfigurableConstructor',
-	        'options' => array(
-	   	       'class' => 'TestBox\DataInjector\CsvDataInjector',
-	           'parameter' => '',
-	        ),    	
-        ),
-    ),
 );
