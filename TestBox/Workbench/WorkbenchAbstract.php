@@ -3,9 +3,8 @@ namespace TestBox\Workbench;
 
 use TestBox\Framework\ServiceLocator\ServiceLocatorAbstract;
 use TestBox\Framework\Configuration\ConfigurationManager;
-use TestBox\Framework\Configuration\Configuration;
 use TestBox\Framework\DependencyInjector\DependencyInjector;
-use TestBox\DataInjector\DataInjectorManager;
+use TestBox\Framework\Configuration\ConfigurationAbstract;
 
 abstract class WorkbenchAbstract extends ServiceLocatorAbstract
 {
@@ -36,7 +35,7 @@ abstract class WorkbenchAbstract extends ServiceLocatorAbstract
      *
      * @param Configuration $initialConfig
      */
-    public function boostrap(Configuration $initialConfig)
+    public function boostrap(ConfigurationAbstract $initialConfig)
     {
         $this->doConfiguration($initialConfig);
         $this->init();
@@ -48,7 +47,7 @@ abstract class WorkbenchAbstract extends ServiceLocatorAbstract
      * And set it into a service
      * @param Configuration $initialConfig
      */
-    abstract protected function doConfiguration(Configuration $initialConfig);
+    abstract protected function doConfiguration(ConfigurationAbstract $initialConfig);
     
     /**
      * Initiate workbench internal elements

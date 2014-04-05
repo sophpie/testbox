@@ -8,10 +8,11 @@
 namespace TestBox\Workbench;
 
 use TestBox\Framework\Configuration\ConfigurationManager;
-use TestBox\Framework\Configuration\Configuration;
+use TestBox\Framework\Configuration\ConfigurationAbstract;
 use TestBox\Framework\ServiceLocator\Service\Instance;
 use TestBox\Framework\DependencyInjector\ReflectionInjector;
-use TestBox\DataInjector\DataInjectorManager;
+use TestBox\Test\Suite\TestSuite;
+use TestBox\Framework\EventManager\EventManager;
 
 class Workbench extends WorkbenchAbstract
 {
@@ -45,7 +46,7 @@ class Workbench extends WorkbenchAbstract
      * (non-PHPdoc)
      * @see \TestBox\Workbench\WorkbenchAbstract::doConfiguration()
      */
-    protected function doConfiguration(Configuration $initialConfig)
+    protected function doConfiguration(ConfigurationAbstract $initialConfig)
     {
         $this->configManager->addFilePhp($this->testBoxDirectory . '/TestBox/Config/global.config.php');
         $this->configManager->add($initialConfig);
@@ -54,16 +55,16 @@ class Workbench extends WorkbenchAbstract
     }
     
     /**
-     * Initiate a test
+     * Initiate a test suite
      *
-     * @param TestInterface $test
+     * @return TestSuite
      */
-    public function testFactory(Array $options)
+    public function createTestSuite()
     {
-        $this->dependencyInjector->configure($options);
-        $test = $this->dependencyInjector->getInstance();
-        $test->setServiceLocator($this);
-        return $test;
+        $testSuite = new TestSuite();
+        $testSuite->setServiceLocator($this);
+        $testSuite->setEventManager(new EventManager());
+        return $testSuite;
     }
     
     /**
@@ -103,7 +104,7 @@ class Workbench extends WorkbenchAbstract
      * @param string $rootDirectory
      * @param Configuration $initialConfig
      */
-    static public function initiate($rootDirectory, Configuration $initialConfig)
+    static public function initiate($rootDirectory, ConfigurationAbstract $initialConfig)
     {
         $workbench = new self($rootDirectory);
         $workbench->boostrap($initialConfig);

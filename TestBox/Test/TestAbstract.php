@@ -5,7 +5,6 @@ use TestBox\Environment\EnvironmentInterface;
 use TestBox\Box\BoxInterface;
 use TestBox\Scenario\ScenarioInterface;
 use TestBox\Framework\ServiceLocator\ServiceLocatorInterface;
-use TestBox\Result\Result;
 
 abstract class TestAbstract implements TestInterface
 {

@@ -1,0 +1,48 @@
+{
+	"workbench":{
+		"environments": {
+				"serviceClass": "Factory",
+				"options": {
+					"factory": "TestBox\\Environment\\EnvironmentManagerFactory"
+				}
+		},
+		"assertionManager": {
+				"serviceClass": "Factory",
+				"options": {
+					"factory": "TestBox\\Assertion\\AssertionManagerFactory"
+				}
+		},
+		"report": {
+				"serviceClass": "Constructor",
+				"options": {
+					"factory": "TestBox\\Report\\Console\\ConsoleReport"
+				}
+		},
+		"dataInjectorManager": {
+				"serviceClass": "Factory",
+				"options": {
+					"factory": "TestBox\\DataInjector\\DataInjectorManagerFactory"
+				}
+		}
+	},
+	"assertion_manager": {
+		"assertTrue": {
+			"serviceClass": "Constructor",
+				"options": {
+					"factory": "TestBox\\Assertion\\Boolean\\AssertTrue"
+				}
+		},
+		"assertFalse": {
+			"serviceClass": "Constructor",
+				"options": {
+					"factory": "TestBox\\Assertion\\Boolean\\AssertFalse"
+				}
+		},
+		"assertEquals": {
+			"serviceClass": "Constructor",
+				"options": {
+					"factory": "TestBox\\Assertion\\Boolean\\AssertEquals"
+				}
+		}
+	}
+}

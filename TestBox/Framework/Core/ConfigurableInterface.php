@@ -1,7 +1,6 @@
 <?php
 namespace TestBox\Framework\Core;
 
-use TestBox\Framework\Configuration\ConfigurationAbstract;
 interface ConfigurableInterface
 {
     /**

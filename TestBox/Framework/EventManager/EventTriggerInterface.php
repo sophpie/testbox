@@ -1,7 +1,6 @@
 <?php
 namespace TestBox\Framework\EventManager;
 
-use TestBox\Framework\EventManager\Event\EventInterface;
 use TestBox\Framework\EventManager\EventManagerInterface;
 use TestBox\Framework\EventManager\PropagationResultInterface;
 

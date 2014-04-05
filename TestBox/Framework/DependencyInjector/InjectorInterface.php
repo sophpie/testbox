@@ -9,5 +9,4 @@ interface InjectorInterface
      * @return mixed
      */
     public function getInstance();
-    
 }

@@ -7,7 +7,6 @@ namespace TestBox\Framework\ServiceLocator;
 
 use TestBox\Framework\ServiceLocator\service\ServiceInterface;
 use TestBox\Framework\Core\ConfigurableInterface;
-use TestBox\Framework\Configuration\ConfigurationAbstract;
 
 abstract class ServiceLocatorAbstract implements ServiceLocatorInterface, ConfigurableInterface
 {
