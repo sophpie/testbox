@@ -1,12 +1,14 @@
 <?php
 namespace TestBox\Framework\Core;
 
+use TestBox\Framework\Configuration\ConfigurationInterface;
+
 interface ConfigurableInterface
 {
     /**
      * Configure object from an array
      * 
-     * @param array $options
+     * @param ConfigurationInterface $config
      */
-    public function configure(Array $options);
+    public function configure(ConfigurationInterface $config);
 }

@@ -1,7 +1,7 @@
 <?php
 namespace TestBox\Framework\Configuration;
 
-class ConfigurationArray extends ConfigurationAbstract
+class ConfigurationArray extends ConfigurationFileAbstract
 {
     /**
      * Constructor
@@ -10,7 +10,7 @@ class ConfigurationArray extends ConfigurationAbstract
      */
     public function __construct(array $array = null)
     {
-        if ($array) $this->setArrayData($array);
+        if ($array) $this->setData($array);
     }
     
     /**
@@ -19,31 +19,16 @@ class ConfigurationArray extends ConfigurationAbstract
      * @param array $array
      * @param string $namespace
      */
-    protected function setArrayData(array $array, $namespace = null)
+    public function setData($array, $namespace = null)
     {
         foreach ($array as $key => $value) {
             if ($namespace) $key = $namespace . self::NS_SEPARATOR . $key;
             if ( ! is_array($value)){
                 $this->set($key,$value);
             }
-            elseif (is_array($value) and $this->isMonoDim($value)) {
-                $this->set($key,$value);
-            }
             else {
-                $this->setArrayData($value, $key);
+                $this->setData($value, $key);
             }
         }
-    }
-    
-    /**
-     * Check if an array is monodimensional or not
-     * 
-     * @param array $array
-     * @return boolean
-     */
-    protected function isMonoDim(array $array)
-    {
-        if (count($array) != count($array,1)) return false;
-        return true;
     }
 }

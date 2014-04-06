@@ -1,7 +1,7 @@
 <?php
 namespace TestBox\Framework\Configuration;
 
-interface ConfigurationInterface
+interface ConfigurationInterface extends \ArrayAccess, \iterator
 {
     const NS_SEPARATOR = '\\';
     

@@ -7,6 +7,7 @@ use TestBox\Framework\ServiceLocator\ServiceLocatorAware;
 use TestBox\Framework\Core\ConfigurableInterface;
 use TestBox\Framework\EventManager\EventTriggerInterface;
 use TestBox\Framework\DependencyInjector\CallableInjector;
+use TestBox\Framework\Configuration\ConfigurationInterface;
 
 abstract class TestSuiteAbstract implements TestSuiteInterface, ServiceLocatorAware, ConfigurableInterface, EventTriggerInterface
 {
@@ -70,7 +71,7 @@ abstract class TestSuiteAbstract implements TestSuiteInterface, ServiceLocatorAw
      * (non-PHPdoc)
      * @see \TestBox\Framework\Core\ConfigurableInterface::configure()
      */
-    public function configure(Array $options)
+    public function configure(ConfigurationInterface $options)
     {
         foreach ($options as $slotName => $actions)
         {
@@ -78,8 +79,8 @@ abstract class TestSuiteAbstract implements TestSuiteInterface, ServiceLocatorAw
             foreach ($actions as $action)
             {
                 $priority =1;
-                if (isset($action['priority'])) $priority = $action['priority'];
-                $this->addAction($slotName, $action['callable'],$priority);
+                if (isset($action->priority)) $priority = $action->priority;
+                $this->addAction($slotName, $action->callable,$priority);
             }
         }
     }

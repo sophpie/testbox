@@ -2,17 +2,21 @@
 /**
  * Main container for TestBox testing
  * 
- * @author sophpie
- *
+ * Services:
+ * config:              Whole configuration
+ * environment:         Environment manager
+ * report:              Report
+ * dataInjectorManager: Data injector manager    
  */
 namespace TestBox\Workbench;
 
-use TestBox\Framework\Configuration\ConfigurationManager;
-use TestBox\Framework\Configuration\ConfigurationAbstract;
+use TestBox\Framework\Configuration\ConfigurationInterface;
+use TestBox\Framework\Configuration\ConfigurationJson;
 use TestBox\Framework\ServiceLocator\Service\Instance;
-use TestBox\Framework\DependencyInjector\ReflectionInjector;
 use TestBox\Test\Suite\TestSuite;
 use TestBox\Framework\EventManager\EventManager;
+use TestBox\Framework\Configuration\Configuration;
+use TestBox\Framework\DependencyInjector\Container\Container;
 
 class Workbench extends WorkbenchAbstract
 {
@@ -38,20 +42,20 @@ class Workbench extends WorkbenchAbstract
     {
         $this->setRootDirectory($rootDirectory);
         $this->setTestBoxDirectory(realpath(__DIR__ .'/../../'));
-        $this->setConfigManager(new ConfigurationManager());
-        $this->setDependencyInjector(new ReflectionInjector());
+        $this->setDiContainer(new Container());
     }
     
     /**
      * (non-PHPdoc)
      * @see \TestBox\Workbench\WorkbenchAbstract::doConfiguration()
      */
-    protected function doConfiguration(ConfigurationAbstract $initialConfig)
+    protected function doConfiguration(ConfigurationInterface $initialConfig)
     {
-        $this->configManager->addFilePhp($this->testBoxDirectory . '/TestBox/Config/global.config.php');
-        $this->configManager->add($initialConfig);
-        $this->addService('config', new Instance($this->configManager->getConfig()));
-        $this->configure($this->get('config')['workbench']);
+        $config = new Configuration();
+        $config->merge(ConfigurationJson::fromFile($this->testBoxDirectory . '/TestBox/Config/global.config.json'));
+        $config->merge($initialConfig);
+        $this->addService('config', new Instance($config));
+        $this->configure($this->get('config')->workbench);
     }
     
     /**
@@ -104,7 +108,7 @@ class Workbench extends WorkbenchAbstract
      * @param string $rootDirectory
      * @param Configuration $initialConfig
      */
-    static public function initiate($rootDirectory, ConfigurationAbstract $initialConfig)
+    static public function initiate($rootDirectory, ConfigurationInterface $initialConfig)
     {
         $workbench = new self($rootDirectory);
         $workbench->boostrap($initialConfig);

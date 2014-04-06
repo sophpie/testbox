@@ -2,43 +2,39 @@
 namespace TestBox\Workbench;
 
 use TestBox\Framework\ServiceLocator\ServiceLocatorAbstract;
-use TestBox\Framework\Configuration\ConfigurationManager;
 use TestBox\Framework\DependencyInjector\DependencyInjector;
-use TestBox\Framework\Configuration\ConfigurationAbstract;
+use TestBox\Framework\Configuration\ConfigurationInterface;
+use TestBox\Framework\Configuration\Configuration;
+use TestBox\Framework\DependencyInjector\Container\ContainerInterface;
 
 abstract class WorkbenchAbstract extends ServiceLocatorAbstract
 {
-    /**
-     * Configuration manager
-     * 
-     * @var ConfigurationManager
-     */
-    protected $configManager;
-    
     /**
      * Dependency injector
      * 
      * @var DependencyInjector
      */
-    protected $dependencyInjector;
-    
-	/**
-     * @param \TestBox\Framework\Configuration\ConfigurationManager $configManager
-     */
-    public function setConfigManager($configManager)
-    {
-        $this->configManager = $configManager;
-    }
+    protected $diContainer;
     
     /**
      * Boostrap workbench
      *
      * @param Configuration $initialConfig
      */
-    public function boostrap(ConfigurationAbstract $initialConfig)
+    public function boostrap(ConfigurationInterface $initialConfig)
     {
         $this->doConfiguration($initialConfig);
         $this->init();
+    }
+    
+    /**
+     * Get configuration
+     * 
+     * @return ConfigurationInterface $config
+     */
+    public function getConfig()
+    {
+        return $this->get('config');
     }
     
     /**
@@ -47,29 +43,30 @@ abstract class WorkbenchAbstract extends ServiceLocatorAbstract
      * And set it into a service
      * @param Configuration $initialConfig
      */
-    abstract protected function doConfiguration(ConfigurationAbstract $initialConfig);
+    abstract protected function doConfiguration(ConfigurationInterface $initialConfig);
     
     /**
      * Initiate workbench internal elements
      */
     protected function init()
     {
-        
     }
     
 	/**
-     * @return the $DependencyInjector
-     */
-    public function getDependencyInjector()
+	 * 
+	 * @return ContainerInterface
+	 */
+    public function getDiContainer()
     {
-        return $this->DependencyInjector;
+        return $this->diContainer;
     }
 
 	/**
-     * @param \TestBox\Framework\DependencyInjector\DependencyInjector $DependencyInjector
-     */
-    public function setDependencyInjector($dependencyInjector)
+	 * 
+	 * @param ContainerInterface $diContainer
+	 */
+    public function setDiContainer(ContainerInterface $diContainer)
     {
-        $this->dependencyInjector = $dependencyInjector;
+        $this->diContainer = $diContainer;
     }
 }

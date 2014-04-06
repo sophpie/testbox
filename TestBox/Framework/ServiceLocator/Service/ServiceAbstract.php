@@ -3,6 +3,7 @@ namespace TestBox\Framework\ServiceLocator\Service;
 
 use TestBox\Framework\Core\ConfigurableInterface;
 use TestBox\Framework\ServiceLocator\ServiceLocatorInterface;
+use TestBox\Framework\Configuration\ConfigurationInterface;
 
 abstract class ServiceAbstract implements ServiceInterface, ConfigurableInterface
 {
@@ -31,10 +32,13 @@ abstract class ServiceAbstract implements ServiceInterface, ConfigurableInterfac
     /**
      * (non-PHPdoc)
      * @see \TestBox\Framework\ServiceLocator\service\ServiceInterface::setOptions()
+     * 
+     * Configure:
+     * isShared: Shared service or not
      */
-    public function configure(Array $options)
+    public function configure(ConfigurationInterface $options)
     {
-        if (isset($option['isShared'])) $this->isShared = $options['isShared'];
+        if (isset($option->isShared)) $this->isShared = $options->isShared;
     }
     
     /**

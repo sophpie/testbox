@@ -12,7 +12,7 @@ class ConfigurationJson extends ConfigurationArray
      */
     public function __construct($jsonData = null)
     {
-       if ($jsonData) $this->setJsonData($jsonData);
+       if ($jsonData) $this->setData($jsonData);
        
     }
     
@@ -21,11 +21,13 @@ class ConfigurationJson extends ConfigurationArray
      * 
      * @param string $jsonData
      */
-    public function setJsonData($jsonData, $namespace = '')
+    public function setData($jsonData, $namespace = '')
     {
         $json = json_decode($jsonData, true);
         if ( ! $this->isValidJson()) return;
-        $this->setArrayData($json, $namespace);
+        $arrayConfig = new ConfigurationArray($json);
+        $this->internalConfig = $arrayConfig->getInternalConfig();
+        unset($arrayConfig);
     }
     
     /**

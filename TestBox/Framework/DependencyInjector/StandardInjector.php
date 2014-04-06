@@ -1,35 +1,20 @@
 <?php
 namespace TestBox\Framework\DependencyInjector;
 
-use TestBox\Framework\Core\ConfigurableInterface;
+use TestBox\Framework\Configuration\ConfigurationInterface;
+use TextBox\Framework\DependencyInjector\InjectorAbstract;
 
-class StandardInjector implements InjectorInterface, ConfigurableInterface
+class StandardInjector extends InjectorAbstract
 {
-    /**
-     * Instance
-     * 
-     * @var mixed
-     */
-    protected $instance;
-    
     /**
      * Constructor 
      * 
      * @param array $options : Injection parameters
      */
-    public function __construct($options = null)
+    public function __construct(ConfigurationInterface $options = null)
     {
-        if ($options) $this->configure($options);
+        $this->setConfig($options);
     }    
-    
-    /**
-     * (non-PHPdoc)
-     * @see \TestBox\Framework\DependencyInjector\InjectorInterface::getInstance()
-     */
-    public function getInstance()
-    {
-        return $this->instance;
-    }
     
     /**
      * Set property value
@@ -37,7 +22,7 @@ class StandardInjector implements InjectorInterface, ConfigurableInterface
      * @param string $property
      * @param mixed $value
      */
-    public function setProperty($property,$value)
+    protected function setProperty($property,$value)
     {
         $setterMethod = 'set' . ucfirst($property);
         if ( ! method_exists($this->instance, $setterMethod)) return;
@@ -47,18 +32,23 @@ class StandardInjector implements InjectorInterface, ConfigurableInterface
     /**
      * (non-PHPdoc)
      * @see \TestBox\Framework\Core\ConfigurableInterface::configure()
+     * 
+     * Configuration :
+     * class:       name of the class to instanciate
+     * properties:  key / value pair to set properties
      */
-    public function configure(Array $options)
+    public function configure(ConfigurationInterface $options)
     {
-        $className = $options['class'];
+        $className = $options->class;
         $this->instance = new $className();
-        if ( ! isset($options['properties'])) return ;
-        foreach ($options['properties'] as $name => $value){
-            if ( ! is_array($value) || ! isset($value['class']))
-                $this->setProperty($name, $value);
-            elseif (isset($value['class'])){
+        if ( ! isset($options->properties)) return ;
+        foreach ($options->properties as $name => $value){
+            if ($value instanceof ConfigurationInterface){
                 $injector = new self($value);
                 $this->setProperty($name, $injector->getInstance());
+            }
+            else {
+                $this->setProperty($name, $value);
             }
         }
     }

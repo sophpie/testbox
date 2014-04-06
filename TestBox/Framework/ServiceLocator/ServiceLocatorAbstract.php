@@ -7,6 +7,7 @@ namespace TestBox\Framework\ServiceLocator;
 
 use TestBox\Framework\ServiceLocator\service\ServiceInterface;
 use TestBox\Framework\Core\ConfigurableInterface;
+use TestBox\Framework\Configuration\ConfigurationInterface;
 
 abstract class ServiceLocatorAbstract implements ServiceLocatorInterface, ConfigurableInterface
 {
@@ -111,20 +112,27 @@ abstract class ServiceLocatorAbstract implements ServiceLocatorInterface, Config
      */
     protected function serviceFactory($options)
     {
-        $serviceClass = ucfirst($options['serviceClass']);
+        $serviceClass = ucfirst($options->serviceClass);
         if (class_exists(__NAMESPACE__ . '\Service\\' . $serviceClass, true))
             $serviceClass = __NAMESPACE__ . '\Service\\' . $serviceClass;
         $service = new $serviceClass();
-        $service->configure($options['options']);
+        $service->configure($options->options);
         return $service;
     }
     
     /**
      * Define all service by confuguration array
      * 
-     * @param array $array
+     * @param ConfigurationInterface $array
+     * 
+     * Configure:
+     * key: service key {
+     *      serviceClass:   Service class to instanciate
+     *      isShared:       Shared service or not
+     *      options:        Service configuration
+     * }
      */
-    public function configure(Array $array)
+    public function configure(ConfigurationInterface $array)
     {
         foreach ($array as $key => $definition){
             $this->defineService($key, $definition);

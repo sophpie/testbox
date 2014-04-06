@@ -4,6 +4,7 @@ namespace TestBox\Environment;
 use TestBox\Framework\ServiceLocator\ServiceLocatorAbstract;
 use TestBox\Environment\Environment;
 use TestBox\Framework\Configuration\ConfigurationAbstract;
+use TestBox\Framework\Configuration\ConfigurationInterface;
 
 class EnvironmentManager extends ServiceLocatorAbstract
 {
@@ -25,15 +26,15 @@ class EnvironmentManager extends ServiceLocatorAbstract
      * (non-PHPdoc)
      * @see \TestBox\Framework\Core\ConfigurableInterface::configure()
      */
-    public function configure(Array $options)
+    public function configure(ConfigurationInterface $options)
     {
         foreach ($options as $envName => $environment)
         {
-            if (isset($environment['isDefault'])){
-                if ($environment['isDefault'] && empty($this->defaultEnvironmentName))
+            if (isset($environment->isDefault)){
+                if ($environment->isDefault && empty($this->defaultEnvironmentName))
                     $this->defaultEnvironmentName = $envName;
             }
-            $this->environmentsList[$envName] = new Environment($environment['services']);
+            $this->environmentsList[$envName] = new Environment($environment->services);
         }
     }
     

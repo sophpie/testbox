@@ -3,6 +3,8 @@ namespace TestBox\Framework\ServiceLocator\Service;
 
 use TestBox\Framework\ServiceLocator\ServiceLocatorInterface;
 use TestBox\Framework\DependencyInjector\ReflectionInjector;
+use TestBox\Framework\Configuration\ConfigurationInterface;
+use TestBox\Framework\DependencyInjector\InjectorFactory;
 
 class DependencyInjection extends ServiceAbstract
 {
@@ -16,14 +18,17 @@ class DependencyInjection extends ServiceAbstract
     /**
      * (non-PHPdoc)
      * @see \TestBox\Framework\ServiceLocator\Service\ServiceAbstract::configure()
+     * 
+     * Configure:
+     * diClass: Dependency injector to intantiate
+     * options: Injector options
      */
-    public function configure(Array $options)
+    public function configure(ConfigurationInterface $options)
     {
         parent::configure($options);
-        if (isset($options['diclass'])){
-            $diclass = $options['diclass'];
-            $this->dependencyInjector = new $diclass();
-            $this->dependencyInjector->configure($options['options']);
+        if (isset($options->diclass)){
+            $diclass = $options->diclass;
+            $this->dependencyInjector = InjectorFactory::create($diclass,$options->options);
         }
     }
     

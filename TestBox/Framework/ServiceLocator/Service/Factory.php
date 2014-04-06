@@ -2,6 +2,7 @@
 namespace TestBox\Framework\ServiceLocator\Service;
 
 use TestBox\Framework\ServiceLocator\ServiceLocatorInterface;
+use TestBox\Framework\Configuration\ConfigurationInterface;
 
 class Factory extends ServiceAbstract
 {
@@ -43,11 +44,14 @@ class Factory extends ServiceAbstract
     /**
      * (non-PHPdoc)
      * @see \TestBox\Framework\ServiceLocator\service\ServiceAbstract::configure()
+     * 
+     * Configure:
+     * factory: Name of the factory class
      */
-    public function configure(Array $options)
+    public function configure(ConfigurationInterface $options)
     {
         parent::configure($options);
-        if (isset($options['factory'])) $this->factoryName = $options['factory'];
+        if (isset($options->factory)) $this->factoryName = $options->factory;
     }
     
     

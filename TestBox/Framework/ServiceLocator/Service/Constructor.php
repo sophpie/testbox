@@ -2,6 +2,8 @@
 namespace TestBox\Framework\ServiceLocator\Service;
 
 use TestBox\Framework\ServiceLocator\ServiceLocatorInterface;
+use TestBox\Framework\Configuration\ConfigurationInterface;
+
 class Constructor extends ServiceAbstract
 {
     /**
@@ -17,9 +19,9 @@ class Constructor extends ServiceAbstract
      */
     public function getInstance(ServiceLocatorInterface $serviceLocator)
     {
+        $className = $this->className;
         if ($this->isShared) {
             if ( ! $this->sharedInstance) {
-                $className = $this->className;
                 $this->sharedInstance = new $className();
             }
             return $this->sharedInstance;
@@ -30,10 +32,13 @@ class Constructor extends ServiceAbstract
     /**
      * (non-PHPdoc)
      * @see \TestBox\Framework\ServiceLocator\service\ServiceAbstract::configure()
+     * 
+     * Configure:
+     * className:   Class to instantiate
      */
-    public function configure(Array $options)
+    public function configure(ConfigurationInterface $options)
     {
         parent::configure($options);
-        if (isset($options['class'])) $this->className = $options['class'];
+        if (isset($options->class)) $this->className = $options->class;
     }
 }

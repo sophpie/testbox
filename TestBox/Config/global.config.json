@@ -15,7 +15,7 @@
 		"report": {
 				"serviceClass": "Constructor",
 				"options": {
-					"factory": "TestBox\\Report\\Console\\ConsoleReport"
+					"class": "TestBox\\Report\\Console\\ConsoleReport"
 				}
 		},
 		"dataInjectorManager": {
@@ -29,19 +29,19 @@
 		"assertTrue": {
 			"serviceClass": "Constructor",
 				"options": {
-					"factory": "TestBox\\Assertion\\Boolean\\AssertTrue"
+					"class": "TestBox\\Assertion\\Boolean\\AssertTrue"
 				}
 		},
 		"assertFalse": {
 			"serviceClass": "Constructor",
 				"options": {
-					"factory": "TestBox\\Assertion\\Boolean\\AssertFalse"
+					"class": "TestBox\\Assertion\\Boolean\\AssertFalse"
 				}
 		},
 		"assertEquals": {
 			"serviceClass": "Constructor",
 				"options": {
-					"factory": "TestBox\\Assertion\\Boolean\\AssertEquals"
+					"class": "TestBox\\Assertion\\Boolean\\AssertEquals"
 				}
 		}
 	}
