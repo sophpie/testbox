@@ -70,7 +70,7 @@ abstract class ConfigurationAbstract implements ConfigurationInterface
      */
     public function __isset($name)
     {
-        $name = $this->normalizeKey($key);
+        $name = $this->normalizeKey($name);
         if (array_key_exists($name, $this->internalConfig)) return true;
         foreach ($this->internalConfig as $key => $value){
             if (preg_match('@^'.$name.'@', $key) == 1) return true;

@@ -2,7 +2,6 @@
 namespace TestBox\Framework\DependencyInjector;
 
 use TestBox\Framework\Configuration\ConfigurationInterface;
-use TextBox\Framework\DependencyInjector\InjectorAbstract;
 
 class StandardInjector extends InjectorAbstract
 {
@@ -13,7 +12,7 @@ class StandardInjector extends InjectorAbstract
      */
     public function __construct(ConfigurationInterface $options = null)
     {
-        $this->setConfig($options);
+        if ($options) $this->setConfig($options);
     }    
     
     /**

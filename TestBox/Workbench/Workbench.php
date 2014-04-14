@@ -17,6 +17,7 @@ use TestBox\Test\Suite\TestSuite;
 use TestBox\Framework\EventManager\EventManager;
 use TestBox\Framework\Configuration\Configuration;
 use TestBox\Framework\DependencyInjector\Container\Container;
+use TestBox\Test\Test;
 
 class Workbench extends WorkbenchAbstract
 {
@@ -56,6 +57,18 @@ class Workbench extends WorkbenchAbstract
         $config->merge($initialConfig);
         $this->addService('config', new Instance($config));
         $this->configure($this->get('config')->workbench);
+    }
+    
+    /**
+     * Test factory
+     * 
+     * @return \TestBox\Test\Test
+     */
+    public function createTest()
+    {
+        $test = new Test();
+        $test->setServiceLocator($this);
+        return $test;
     }
     
     /**
@@ -108,9 +121,9 @@ class Workbench extends WorkbenchAbstract
      * @param string $rootDirectory
      * @param Configuration $initialConfig
      */
-    static public function initiate($rootDirectory, ConfigurationInterface $initialConfig)
+    static public function initiate(ConfigurationInterface $initialConfig,$rootDirectory = null)
     {
-        $workbench = new self($rootDirectory);
+        $workbench = new self(rtrim($rootDirectory,DIRECTORY_SEPARATOR));
         $workbench->boostrap($initialConfig);
         return $workbench;
     }

@@ -20,7 +20,7 @@ abstract class ContainerAbstract extends ServiceLocatorAbstract implements Conta
      * 
      * Configure :
      * key: name of instance {
-     *      diClass:    injector class to use
+     *      diClass:    injector class to use ('StandardInjector' as default)
      *      options:    injector configuration (class, properties, etc.)
      * }
      */
@@ -32,15 +32,23 @@ abstract class ContainerAbstract extends ServiceLocatorAbstract implements Conta
     /**
      * Get instance
      * 
+     * If intance is not define, you can set it on the fly by giving its configuration
      * @param string $key
+     * @param ConfigurationInterface $config diclass and options
+     * @return mixed;
      */
-    public function getInstance($key)
+    public function getInstance($key, ConfigurationInterface $config = null, $isShared = true)
     {
         if ( ! $this->hasService($key)) {
-            $this->defineService($key, new ConfigurationArray(array(
-            	'serviceClass' => 'DependencyInjection',
-                'options' => $this->config->get($key),
-            )));
+            if ( ! $config) {
+                $config = $this->config->get($key);
+            }
+            $serviceConfig = new ConfigurationArray(array(
+                'isShared' => $isShared,
+                'serviceClass' => 'DependencyInjection',
+                'options' => $config,
+            ));
+            $this->defineService($key, $serviceConfig);
         }
         return $this->get($key);
     }

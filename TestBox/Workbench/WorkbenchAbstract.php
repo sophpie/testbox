@@ -10,9 +10,9 @@ use TestBox\Framework\DependencyInjector\Container\ContainerInterface;
 abstract class WorkbenchAbstract extends ServiceLocatorAbstract
 {
     /**
-     * Dependency injector
+     * Dependency injector container
      * 
-     * @var DependencyInjector
+     * @var ContainerInterface
      */
     protected $diContainer;
     

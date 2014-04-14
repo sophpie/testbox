@@ -19,6 +19,7 @@ class Constructor extends ServiceAbstract
      */
     public function getInstance(ServiceLocatorInterface $serviceLocator)
     {
+        $this->configure($this->config);
         $className = $this->className;
         if ($this->isShared) {
             if ( ! $this->sharedInstance) {

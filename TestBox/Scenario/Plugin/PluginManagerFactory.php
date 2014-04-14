@@ -1,10 +1,11 @@
 <?php
-namespace TestBox\Assertion;
+namespace TestBox\Assertion\Plugin;
 
 use TestBox\Framework\ServiceLocator\Service\FactoryInterface;
 use TestBox\Framework\ServiceLocator\ServiceLocatorInterface;
+use TestBox\Scenario\PluginManager;
 
-class AssertionManagerFactory implements FactoryInterface
+class PluginManagerFactory implements FactoryInterface
 {
     /**
      * (non-PHPdoc)
@@ -13,7 +14,8 @@ class AssertionManagerFactory implements FactoryInterface
     public function createInstance(ServiceLocatorInterface $serviceLocator)
     {
         $config = $serviceLocator->get('config');
-        $assertionManager = new AssertionManager($config['assertion_manager']);
-        return $assertionManager;
+        $pluginManager = new PluginManager();
+        $pluginManager->configure($config->plugins);
+        return $pluginManager;
     }
 }

@@ -1,7 +1,6 @@
 <?php
 namespace TestBox\Test;
 
-use TestBox\Environment\EnvironmentInterface;
 use TestBox\Box\BoxInterface;
 use TestBox\Scenario\ScenarioInterface;
 use TestBox\Framework\ServiceLocator\ServiceLocatorInterface;
@@ -9,13 +8,6 @@ use TestBox\Framework\ServiceLocator\ServiceLocatorInterface;
 abstract class TestAbstract implements TestInterface
 {
     use \TestBox\Framework\EventManager\Trigger\EventTriggerTrait;
-    
-	/**
-	 * Environment
-	 * 
-	 * @var EnvironmentInterface
-	 */
-	protected $environment;
 	
 	/**
 	 * Box
@@ -77,15 +69,6 @@ abstract class TestAbstract implements TestInterface
         $this->retrigger(TestEvent::EVENT_REPORT);
     }
     
-	/**
-	 * (non-PHPdoc)
-	 * @see \TestBox\Test\TestInterface::setEnvironment()
-	 */
-    public function setEnvironment(EnvironmentInterface $environment)
-    {
-        $this->environment = $environment;
-    }
-    
     /**
      * (non-PHPdoc)
      * @see \TestBox\Framework\ServiceLocator\ServiceLocatorAware::setServiceLocator()
@@ -93,14 +76,6 @@ abstract class TestAbstract implements TestInterface
     public function setServiceLocator(ServiceLocatorInterface $workbench)
     {
         $this->workbench = $workbench;
-    }
-    
-	/**
-     * @return the $environment
-     */
-    public function getEnvironment()
-    {
-        return $this->environment;
     }
 
 	/**

@@ -79,15 +79,21 @@ abstract class ScenarioAbstract implements ScenarioInterface
     }
 
     /**
-     * Method alias manager 
+     * Manage called method
+     * 
+     * Call plugins.
      * 
      * @param string $name
      * @param array $args
      */
     public function __call($name, $args)
     {
-        if (substr($name,0,6) == 'assert')
-            return $this->doAssertion($name, $args);
+        if ($this->getPluginManager()->hasService($name)){
+            $plugin = $this->getPluginManager()->get($name);
+            $plugin->setScenario($this);
+            $plugin($args);
+            return $plugin;
+        }
     }
     
     /**
@@ -101,23 +107,12 @@ abstract class ScenarioAbstract implements ScenarioInterface
         if ( ! $dataInjector) return;
         return $dataInjector;
     }
-    
     /**
-     * Manage assertion
+     * get plugin manager
      */
-    protected function doAssertion($assertionName, $args)
+    protected function getPluginManager()
     {
-        $assertion = $this->getAssertionManager()->getAssertion($assertionName);
-        $assertionResult = $assertion->check($args);
-        $this->event->addAssertionresult($assertionResult);
-    }
-    
-    /**
-     * get assertion manager
-     */
-    protected function getAssertionManager()
-    {
-        return $this->workbench->get('assertionManager');
+        return $this->workbench->get('pluginManager');
     }
     
     /**

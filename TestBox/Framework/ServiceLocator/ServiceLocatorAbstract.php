@@ -116,7 +116,7 @@ abstract class ServiceLocatorAbstract implements ServiceLocatorInterface, Config
         if (class_exists(__NAMESPACE__ . '\Service\\' . $serviceClass, true))
             $serviceClass = __NAMESPACE__ . '\Service\\' . $serviceClass;
         $service = new $serviceClass();
-        $service->configure($options->options);
+        $service->setConfig($options->options);
         return $service;
     }
     

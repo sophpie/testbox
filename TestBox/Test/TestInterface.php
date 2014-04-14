@@ -22,11 +22,4 @@ interface TestInterface extends EventTriggerInterface,ServiceLocatorAware
 	 * @param string $scenarioFile
 	 */
 	public function setScenario(ScenarioInterface $scenarioFile);
-	
-	/**
-	 * Set environement
-	 * 
-	 * @param EnvironmentInterface $environment
-	 */
-	public function setEnvironment(EnvironmentInterface $environment);
 }

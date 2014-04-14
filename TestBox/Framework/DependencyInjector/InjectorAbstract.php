@@ -1,5 +1,5 @@
 <?php
-namespace TextBox\Framework\DependencyInjector;
+namespace TestBox\Framework\DependencyInjector;
 
 use TestBox\Framework\DependencyInjector\InjectorInterface;
 use TestBox\Framework\Configuration\ConfigurationInterface;
@@ -26,6 +26,7 @@ abstract class InjectorAbstract implements InjectorInterface
      */
     public function getInstance()
     {
+        var_dump($this->config);
         if ( ! $this->instance) $this->configure($this->config);
         return $this->instance;
     }

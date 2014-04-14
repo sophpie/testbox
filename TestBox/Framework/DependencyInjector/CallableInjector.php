@@ -40,7 +40,7 @@ class CallableInjector
      * @param string $injectorClassName
      * @param array $args
      */
-    public function __construct($className,$methodName,$args = null,$injectorClassName = 'Standard')
+    public function __construct($className,$methodName,$args = null,$injectorClassName = 'StandardInjector')
     {
         $this->injectorClassName = $injectorClassName;
         $this->methodName = $methodName;

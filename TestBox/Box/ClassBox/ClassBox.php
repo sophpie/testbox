@@ -22,14 +22,21 @@ class ClassBox extends BoxAbstract
     
     /**
      * Constructor
+     */
+    public function __construct()
+    {
+        $this->parameters = new ClassBoxParameters();
+        $this->instantiateSample();
+    }
+    
+    /**
+     * Set class name
      * 
      * @param string $className
      */
-    public function __construct($className)
+    public function setClassName($className)
     {
-        $this->parameters = new ClassBoxParameters();
         $this->reflection = new \ReflectionClass($className);
-        $this->instantiateSample();
     }
     
     /**

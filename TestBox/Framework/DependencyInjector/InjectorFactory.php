@@ -13,14 +13,16 @@ class InjectorFactory
      * @throws \Exception
      * @return InjectorInterface
      */
-    static public function create($name = 'StandardInjector', $options = null)
+    static public function create($name, $options = null)
     {
+        if ( ! $name) $name = 'StandardInjector';
+        $di = null;
         if (class_exists($name)) $di = new $name();
-        $name = '\TestBox\Framework\DependencyInjector\\' . ucfirst($name);
-        if (class_exists($name)) $di = new $name();
-        $name.=$name .'Injector';
-        if (class_exists($name)) $di = new $name();
-        throw new \Exception('Cannot instantiate ' . $name);
+        if ( ! $di){
+            $name = '\TestBox\Framework\DependencyInjector\\' . ucfirst($name);
+            if (class_exists($name)) $di = new $name();
+        }
+        if ( ! $di) throw new \Exception('Cannot instantiate ' . $name);
         if ($name instanceof ConfigurableInterface) $di->setConfig($options);
         return $di;
     }

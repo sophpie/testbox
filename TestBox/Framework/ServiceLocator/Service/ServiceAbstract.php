@@ -21,12 +21,29 @@ abstract class ServiceAbstract implements ServiceInterface, ConfigurableInterfac
     protected $sharedInstance;
     
     /**
+     * Configuration
+     * 
+     * @var ConfigurationInterface
+     */
+    protected $config;
+    
+    /**
      * (non-PHPdoc)
      * @see \TestBox\Framework\ServiceLocator\service\ServeInterface::isShared()
      */
     public function isShared()
     {
         return $this->isShared;
+    }
+    
+    /**
+     * Set configuration
+     * 
+     * @param ConfigurationInterface $config
+     */
+    public function setConfig(ConfigurationInterface $config)
+    {
+        $this->config = $config
     }
     
     /**

@@ -25,11 +25,13 @@ class DependencyInjection extends ServiceAbstract
      */
     public function configure(ConfigurationInterface $options)
     {
+        $this->configure($this->config);
         parent::configure($options);
+        $diClass = null;
         if (isset($options->diclass)){
-            $diclass = $options->diclass;
-            $this->dependencyInjector = InjectorFactory::create($diclass,$options->options);
+            $diClass = $options->diclass;
         }
+        $this->dependencyInjector = InjectorFactory::create($diClass,$options->options);
     }
     
     /**

@@ -20,6 +20,7 @@ class Instance extends ServiceAbstract
      */
     public function getInstance(ServiceLocatorInterface $serviceLocator)
     {
+        $this->configure($this->config);
         return $this->sharedInstance;
     }
     

@@ -6,10 +6,10 @@
 					"factory": "TestBox\\Environment\\EnvironmentManagerFactory"
 				}
 		},
-		"assertionManager": {
+		"pluginManager": {
 				"serviceClass": "Factory",
 				"options": {
-					"factory": "TestBox\\Assertion\\AssertionManagerFactory"
+					"factory": "TestBox\\Scenario\\PluginManagerFactory"
 				}
 		},
 		"report": {
@@ -25,7 +25,7 @@
 				}
 		}
 	},
-	"assertion_manager": {
+	"plugins": {
 		"assertTrue": {
 			"serviceClass": "Constructor",
 				"options": {

@@ -3,9 +3,30 @@ namespace TestBox\Test;
 
 use TestBox\Framework\EventManager\EventManager;
 use TestBox\Test\TestEvent;
+use TestBox\Framework\Core\ConfigurableInterface;
+use TestBox\Framework\Configuration\ConfigurationInterface;
 
-class Test extends TestAbstract
+class Test extends TestAbstract implements ConfigurableInterface
 {
+    
+    /**
+     * (non-PHPdoc)
+     * @see \TestBox\Framework\Core\ConfigurableInterface::configure()
+     * 
+     * Configure:
+     * box:         box class
+     *                  diClass :  Dependency injector class
+     *                  options :   DI options
+     * scenario :   scenario class
+     */
+    public function configure(ConfigurationInterface $config)
+    {
+        $box = $this->workbench->getDiContainer()
+            ->getInstance('box',$config->box,false);
+        $this->setBox($box);
+        $this->setScenario(new $config->scenario);
+    }
+    
     /**
      * Constructor
      */

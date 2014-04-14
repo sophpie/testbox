@@ -6,7 +6,6 @@ use TestBox\Workbench\WorkbenchAbstract;
 use TestBox\Framework\ServiceLocator\ServiceLocatorAware;
 use TestBox\Framework\Core\ConfigurableInterface;
 use TestBox\Framework\EventManager\EventTriggerInterface;
-use TestBox\Framework\DependencyInjector\CallableInjector;
 use TestBox\Framework\Configuration\ConfigurationInterface;
 
 abstract class TestSuiteAbstract implements TestSuiteInterface, ServiceLocatorAware, ConfigurableInterface, EventTriggerInterface

@@ -28,6 +28,7 @@ class Factory extends ServiceAbstract
      */
     public function getInstance(ServiceLocatorInterface $serviceLocator)
     {
+        $this->configure($this->config);
         if ( ! $this->factoryInstance){
             $factoryName = $this->factoryName;
             $this->factoryInstance = new $factoryName();
