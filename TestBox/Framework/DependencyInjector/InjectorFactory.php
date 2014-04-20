@@ -23,7 +23,7 @@ class InjectorFactory
             if (class_exists($name)) $di = new $name();
         }
         if ( ! $di) throw new \Exception('Cannot instantiate ' . $name);
-        if ($name instanceof ConfigurableInterface) $di->setConfig($options);
+        if (method_exists($di, 'setConfig')) $di->setConfig($options);
         return $di;
     }
 }

@@ -20,7 +20,6 @@ class Instance extends ServiceAbstract
      */
     public function getInstance(ServiceLocatorInterface $serviceLocator)
     {
-        $this->configure($this->config);
         return $this->sharedInstance;
     }
     
@@ -37,26 +36,13 @@ class Instance extends ServiceAbstract
     }
     
     /**
-     * (non-PHPdoc)
-     * @see \TestBox\Framework\ServiceLocator\service\ServiceAbstract::configure()
-     * 
-     * Configure:
-     * instance: Object to set in service locator
-     */
-    public function configure(ConfigurationInterface $options)
-    {
-        parent::configure($options);
-        if (isset($options->instance)) $this->setInstance($options->instance);
-    }
-    
-    /**
      * Constructor
      * 
      * @param mixed $instance
      * @param boolean $isShared
      */
-    public function __construct($instance = null)
+    public function __construct($instance)
     {
-        if ($instance) $this->setInstance($instance);
+        $this->setInstance($instance);
     }
 }

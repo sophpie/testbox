@@ -25,7 +25,6 @@ class DependencyInjection extends ServiceAbstract
      */
     public function configure(ConfigurationInterface $options)
     {
-        $this->configure($this->config);
         parent::configure($options);
         $diClass = null;
         if (isset($options->diclass)){
@@ -40,6 +39,7 @@ class DependencyInjection extends ServiceAbstract
      */
     public function getInstance(ServiceLocatorInterface $serviceLocator)
     {
+        $this->configure($this->config);
         if ($this->isShared) {
             if ( ! $this->sharedInstance) {
                 $this->sharedInstance = $this->dependencyInjector->getInstance();

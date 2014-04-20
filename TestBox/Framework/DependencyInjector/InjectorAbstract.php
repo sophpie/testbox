@@ -26,7 +26,6 @@ abstract class InjectorAbstract implements InjectorInterface
      */
     public function getInstance()
     {
-        var_dump($this->config);
         if ( ! $this->instance) $this->configure($this->config);
         return $this->instance;
     }

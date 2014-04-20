@@ -43,7 +43,7 @@ abstract class ServiceAbstract implements ServiceInterface, ConfigurableInterfac
      */
     public function setConfig(ConfigurationInterface $config)
     {
-        $this->config = $config
+        $this->config = $config;
     }
     
     /**
