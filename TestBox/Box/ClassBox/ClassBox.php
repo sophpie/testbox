@@ -26,7 +26,6 @@ class ClassBox extends BoxAbstract
     public function __construct()
     {
         $this->parameters = new ClassBoxParameters();
-        $this->instantiateSample();
     }
     
     /**
@@ -37,6 +36,7 @@ class ClassBox extends BoxAbstract
     public function setClassName($className)
     {
         $this->reflection = new \ReflectionClass($className);
+        $this->instantiateSample();
     }
     
     /**

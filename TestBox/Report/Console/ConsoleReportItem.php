@@ -14,7 +14,6 @@ class ConsoleReportItem extends ReportItemAbstract
     {
         $test = $testEvent->getTest();
         $this->isValid = $test->getIsValid();
-        $this->setParam('scenario', get_class($test->getScenario()));
         $this->setParam('assertionResults', $testEvent->getAssertionresults());
     }
 }

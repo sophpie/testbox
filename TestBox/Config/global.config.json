@@ -9,7 +9,7 @@
 		"pluginManager": {
 				"serviceClass": "Factory",
 				"options": {
-					"factory": "TestBox\\Scenario\\PluginManagerFactory"
+					"factory": "TestBox\\Test\\Plugin\\PluginManagerFactory"
 				}
 		},
 		"report": {

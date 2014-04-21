@@ -1,5 +1,5 @@
 <?php
-namespace TestBox\Scenario\Plugin;
+namespace TestBox\Test\Plugin;
 
 use TestBox\Framework\ServiceLocator\ServiceLocatorAbstract;
 

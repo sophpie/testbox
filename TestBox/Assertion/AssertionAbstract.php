@@ -2,7 +2,7 @@
 namespace TestBox\Assertion;
 
 use TestBox\Assertion\AssertionResult;
-use TestBox\Scenario\Plugin\PluginAbstract;
+use TestBox\Test\Plugin\PluginAbstract;
 
 abstract class AssertionAbstract extends PluginAbstract implements AssertionInterface
 {
@@ -34,7 +34,7 @@ abstract class AssertionAbstract extends PluginAbstract implements AssertionInte
             $assertionResult->setMessage($unvalidatedMessage);
         elseif ($validatedMessage)
             $assertionResult->setMessage($validatedMessage);
-        $event = $this->scenario->getEvent();
+        $event = $this->test->getEvent();
         $event->addAssertionresult($assertionResult);
     }
     

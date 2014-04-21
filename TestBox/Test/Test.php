@@ -36,6 +36,7 @@ class Test extends TestAbstract implements ConfigurableInterface
         $this->eventManager->attach(TestEvent::EVENT_TEST, array($this,'executeScenario'));
         $this->eventManager->attach(TestEvent::EVENT_VALIDATION, array($this,'doValidation'));
         $this->eventManager->attach(TestEvent::EVENT_REPORT, array($this,'doReport'));
+        if (method_exists($this, 'init')) $this->init();
     }
     
     /**
@@ -43,9 +44,11 @@ class Test extends TestAbstract implements ConfigurableInterface
      */
     public function executeScenario(TestEvent $event)
     {
-        $this->scenario->setBox($this->box);
-        $this->scenario->setEvent($event);
-        $this->scenario->run();
+        $scenarioParams = array(
+            'event' => $event,
+            'box' => $this->box,
+        );
+        call_user_func_array($this->scenario, $scenarioParams);
     }
     
     /**

@@ -4,8 +4,6 @@ namespace TestBox\Test;
 use TestBox\Framework\ServiceLocator\ServiceLocatorAware;
 use TestBox\Framework\EventManager\EventTriggerInterface;
 use TestBox\Box\BoxInterface;
-use TestBox\Scenario\ScenarioInterface;
-use TestBox\Environment\EnvironmentInterface;
 
 interface TestInterface extends EventTriggerInterface,ServiceLocatorAware
 {
@@ -17,9 +15,9 @@ interface TestInterface extends EventTriggerInterface,ServiceLocatorAware
 	public function setBox(BoxInterface $box);
 	
 	/**
-	 * Set scenario script
+	 * Set scenario callabe
 	 * 
-	 * @param string $scenarioFile
+	 * @param Callable $scenario
 	 */
-	public function setScenario(ScenarioInterface $scenarioFile);
+	public function setScenario(Callable $scenario);
 }

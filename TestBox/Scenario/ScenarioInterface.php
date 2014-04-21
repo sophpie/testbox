@@ -1,24 +1,13 @@
 <?php
 namespace TestBox\Scenario;
 
-use TestBox\Box\BoxInterface;
-use TestBox\Framework\ServiceLocator\ServiceLocatorAware;
-
-interface ScenarioInterface extends ServiceLocatorAware
+interface ScenarioInterface
 {
     /**
-     * Set box
+     * Set sceanrio as a callable class
      * 
-     * @param mixed $subject
+     * @param unknown $args
      */
-    public function setBox(BoxInterface $box);
-    
-    /**
-     * Run scenario
-     * 
-     * @retun mixed
-     */
-    public function run();
-    
+    public function __invoke($args);
     
 }

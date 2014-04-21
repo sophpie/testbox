@@ -123,8 +123,13 @@ class AnnotationParser
      */
     protected function parseAnnotations($name = null)
     {
+        if ( ! array_key_exists($this->currentChunk,$this->annotations))
+            $this->annotations[$this->currentChunk] = array();
         foreach ($this->annotationBuffer as $annotationString){
-            $this->annotations[$this->currentChunk] = $this->annotationFactory->fromString($annotationString);
+            $annotation = $this->annotationFactory->fromString($annotationString);
+            if (! $annotation) continue;
+            if ( ! $name) array_push($this->annotations[$this->currentChunk], $annotation);
+            else $this->annotations[$this->currentChunk][$name] = $annotation;
         }
     }
 }

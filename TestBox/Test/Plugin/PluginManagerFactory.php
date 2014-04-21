@@ -1,9 +1,9 @@
 <?php
-namespace TestBox\Assertion\Plugin;
+namespace TestBox\Test\Plugin;
 
 use TestBox\Framework\ServiceLocator\Service\FactoryInterface;
 use TestBox\Framework\ServiceLocator\ServiceLocatorInterface;
-use TestBox\Scenario\PluginManager;
+use TestBox\Test\Plugin\PluginManager;
 
 class PluginManagerFactory implements FactoryInterface
 {

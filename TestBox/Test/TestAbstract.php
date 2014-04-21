@@ -2,7 +2,6 @@
 namespace TestBox\Test;
 
 use TestBox\Box\BoxInterface;
-use TestBox\Scenario\ScenarioInterface;
 use TestBox\Framework\ServiceLocator\ServiceLocatorInterface;
 
 abstract class TestAbstract implements TestInterface
@@ -19,7 +18,7 @@ abstract class TestAbstract implements TestInterface
 	/**
 	 * Scenario to run
 	 * 
-	 * @var ScenarioInterface
+	 * @var Callable
 	 */
 	protected $scenario;
 	
@@ -38,11 +37,19 @@ abstract class TestAbstract implements TestInterface
 	protected $isValid = false;
 	
 	/**
+	 * Test event
+	 * 
+	 * Will collect test info and manage testing operations
+	 * @var TestEvent
+	 */
+	protected $event;
+	
+	/**
 	 * Set and configure scenario
 	 * 
      * @param string $scenario
      */
-    public function setScenario(ScenarioInterface $scenario)
+    public function setScenario(Callable $scenario)
     {
         $this->scenario = $scenario;
     }
@@ -56,17 +63,50 @@ abstract class TestAbstract implements TestInterface
     }
     
     /**
+     * Initiate test instance
+     */
+    protected function init()
+    {
+        
+    }
+    
+    /**
      * (non-PHPdoc)
      * @see \TestBox\Test\TestAbstract::run()
      */
     public function run()
     {
-        $this->scenario->setServiceLocator($this->workbench);
-        $testEvent = new TestEvent(TestEvent::EVENT_TEST);
-        $testEvent->setTest($this);
-        $this->trigger($testEvent);
+        $this->event = new TestEvent(TestEvent::EVENT_TEST);
+        $this->event->setTest($this);
+        $this->trigger($this->event);
         $this->retrigger(TestEvent::EVENT_VALIDATION);
         $this->retrigger(TestEvent::EVENT_REPORT);
+    }
+    
+    /**
+     * Manage called method
+     *
+     * Call plugins.
+     *
+     * @param string $name
+     * @param array $args
+     */
+    public function __call($name, $args)
+    {
+        if ($this->getPluginManager()->hasService($name)){
+            $plugin = $this->getPluginManager()->get($name);
+            $plugin->setTest($this);
+            $plugin($args);
+            return $plugin;
+        }
+    }
+    
+    /**
+     * get plugin manager
+     */
+    protected function getPluginManager()
+    {
+        return $this->workbench->get('pluginManager');
     }
     
     /**
@@ -101,4 +141,21 @@ abstract class TestAbstract implements TestInterface
     {
         return $this->isValid;
     }
+    
+	/**
+     * @return the $event
+     */
+    public function getEvent()
+    {
+        return $this->event;
+    }
+
+	/**
+     * @param \TestBox\Test\TestEvent $event
+     */
+    public function setEvent($event)
+    {
+        $this->event = $event;
+    }
+
 }
