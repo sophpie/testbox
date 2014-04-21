@@ -12,5 +12,4 @@ interface AssertionInterface
      * @return boolean
      */
     public function validate($args);
-    
 }

@@ -7,7 +7,7 @@ use TestBox\Test\Plugin\PluginAbstract;
 abstract class AssertionAbstract extends PluginAbstract implements AssertionInterface
 {
     /**
-     * return the number of arguments nededed by validate();
+     * Return the number of arguments nededed by validate();
      * @return number
      */
     abstract protected function getArgsNumber();
@@ -15,6 +15,8 @@ abstract class AssertionAbstract extends PluginAbstract implements AssertionInte
     /**
      * Ckeck assertion
      * 
+     * Check if assertion is valid or not
+     * Add valid/ubnvalid messages to TestEvent
      * @param array $args
      * @param string $unvalidatedMessage message to be displayed if assertion is not valid
      * @param string $validatedMessage message to be displayed if assertion is valid
