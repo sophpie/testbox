@@ -2,7 +2,7 @@
 namespace TestBox\Assertion;
 
 use TestBox\Assertion\AssertionResult;
-use TestBox\Test\Plugin\PluginAbstract;
+use TestBox\Box\Plugin\PluginAbstract;
 
 abstract class AssertionAbstract extends PluginAbstract implements AssertionInterface
 {

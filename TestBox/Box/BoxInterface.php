@@ -1,8 +1,15 @@
 <?php
 namespace TestBox\Box;
 
+use TestBox\Box\Plugin\PluginManager;
+
 interface BoxInterface
-{
+{   
+    /**
+     * Constructor
+     */
+    public function __construct();
+    
     /**
      * Return Box status
      * 
@@ -26,4 +33,18 @@ interface BoxInterface
 	 * @return mixed
 	 */
 	public function execute($command, $args = array());
+	
+	/**
+	 * Get plugin manager
+	 * 
+	 * @return PluginManager
+	 */
+	public function getPluginManager();
+	
+	/**
+	 * Set plugin manager
+	 * 
+	 * @param PluginManager $pluginManager
+	 */
+	public function setPluginManager(PluginManager $pluginManager);
 }

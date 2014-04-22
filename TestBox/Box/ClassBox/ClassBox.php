@@ -21,9 +21,10 @@ class ClassBox extends BoxAbstract
     protected $reflection;
     
     /**
-     * Constructor
+     * (non-PHPdoc)
+     * @see \TestBox\Box\BoxAbstract::init()
      */
-    public function __construct()
+    public function init()
     {
         $this->parameters = new ClassBoxParameters();
     }

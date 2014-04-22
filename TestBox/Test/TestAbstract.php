@@ -86,27 +86,19 @@ abstract class TestAbstract implements TestInterface
     /**
      * Manage called method
      *
-     * Call plugins.
+     * Call box plugins from scenarii callable
      *
      * @param string $name
      * @param array $args
      */
     public function __call($name, $args)
     {
-        if ($this->getPluginManager()->hasService($name)){
-            $plugin = $this->getPluginManager()->get($name);
+        if ($this->box->getPluginManager()->hasService($name)){
+            $plugin = $this->box->getPluginManager()->get($name);
             $plugin->setTest($this);
             $plugin($args);
             return $plugin;
         }
-    }
-    
-    /**
-     * get plugin manager
-     */
-    protected function getPluginManager()
-    {
-        return $this->workbench->get('pluginManager');
     }
     
     /**

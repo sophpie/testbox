@@ -3,7 +3,7 @@ namespace TestBox\Test\Plugin;
 
 use TestBox\Framework\ServiceLocator\Service\FactoryInterface;
 use TestBox\Framework\ServiceLocator\ServiceLocatorInterface;
-use TestBox\Test\Plugin\PluginManager;
+use TestBox\Box\Plugin\PluginManager;
 
 class PluginManagerFactory implements FactoryInterface
 {

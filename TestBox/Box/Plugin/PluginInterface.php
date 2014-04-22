@@ -1,5 +1,5 @@
 <?php
-namespace TestBox\Test\Plugin;
+namespace TestBox\Box\Plugin;
 
 use TestBox\Test\TestInterface;
 
